@@ -1,13 +1,38 @@
 <!DOCTYPE html>
 <html>
 <body>
+<div class="nav">  <h1 >{{title}}</h1> </div>
+<nav>
+  <ul>
+    <a routerLink="/home" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+    <a routerLink="/about" routerLinkActive="active" ariaCurrentWhenActive="page">About</a>
+    <a routerLink="/movies" routerLinkActive="active" ariaCurrentWhenActive="page">Movies</a>
+    <a routerLink="/contact" routerLinkActive="active" ariaCurrentWhenActive="page">Contact</a>
+  </ul>
+</nav>
+<router-outlet></router-outlet>
 
-<h1 >{{title}}</h1>
-
-<p>Welcome to my project</p>
-
-
-
+<footer>
+    <div class="container">
+      <div class="social-icons">
+        <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
+        <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
+        <a href="#" target="_blank"><i class="fa fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fa fa-linkedin"></i></a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#">Press Room</a></li>
+          <li><a href="#">Advertising</a></li>
+          <li><a href="#">Terms of Service</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Sitemap</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
 </body>
 </html>
 
