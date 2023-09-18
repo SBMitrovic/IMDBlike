@@ -2,6 +2,17 @@
 
 <div> 
 
-    
-    <div *ngFor="let movie of movies"> {{movie}}</div>
+    <div *ngFor="let user of usersArr">
+
+        User: {{user.address.city}}
+    </div>
+
+    <div *ngFor="let genre of genresArr">
+
+        Genre name: {{genre.name}}, id : {{genre.id}}
+    </div>
+
+   
+    <button (click)="logUsers()">Clicke me users</button>
+    <button (click)="logGenres()">Clicke me genres</button>
 </div>
