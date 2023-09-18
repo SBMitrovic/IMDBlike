@@ -1,18 +1,15 @@
 <p>movies works!</p>
-
-<div> 
-
-    <div *ngFor="let user of usersArr">
-
-        User: {{user.address.city}}
-    </div>
-
+<div class="container" *ngIf="(genresArr.length !== 0 )">
+    <h3>List of genres:</h3>
     <div *ngFor="let genre of genresArr">
-
         Genre name: {{genre.name}}, id : {{genre.id}}
     </div>
-
-   
-    <button (click)="logUsers()">Clicke me users</button>
-    <button (click)="logGenres()">Clicke me genres</button>
 </div>
+<div *ngIf="!(genresArr.length !== 0 )">There are no genres></div>
+
+
+<div *ngFor="let movie of moviesArr">
+    Movie name: {{movie.title}}, id : {{movie.id}}
+</div>
+   
+

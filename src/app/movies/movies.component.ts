@@ -4,43 +4,39 @@ import { Genre } from '../interfaces/genre';
 import { Genres } from '../interfaces/genres';
 import { Observable, from } from 'rxjs';
 import { User } from '../interfaces/user';
+import { GenresService } from './services/genres.service';
+import { Movie, Movies } from '../interfaces/movie';
 
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
   styleUrls: ['./movies.component.sass']
 })
+
 export class MoviesComponent {
   usersArr: User[] = [];
   genresArr : Genre[] = [];
+  moviesArr : Movie[] = [];
 
-  genres  : Observable<Genres> | undefined;
-  users : Observable<User[]>;
+  genres  : Observable<Genres>;
+  movies : Observable<Movies>;
+//  users : Observable<User[]>;
 
-  constructor(moviesService: MoviesapiService) {
+  constructor(moviesService: MoviesapiService, genresService : GenresService) {
+  /*
     this.users = moviesService.getUsers();
     this.users.subscribe(val => this.usersArr = val);
     this.users.subscribe(val => console.log(val));
     console.log('Type of this.users: ' + typeof this.users);
-
-    this.genres = moviesService.getGenres();
-    this.genres.subscribe(res => this.genresArr = res.genres);
-    this.genres.subscribe(val => console.log(val.genres));
-    console.log('Type of this.genres: ' + typeof this.users);
+*/
+    this.genres = genresService.getAllGenres();
+    this.genres.subscribe(val => this.genresArr = val.genres);
     
+    this.movies = moviesService.getTopRatedMovies();
+    this.movies.subscribe(val => this.moviesArr = val.results);
+    //console.log(this.moviesArr[0].title);
+    this.movies.subscribe(val => console.log(val));
   }
-    logGenres(){
-      for(let genre of this.genresArr){
-        console.log('Genres' + genre.id);
-      }
-    }
-
-    // log users
-    logUsers(){
-      for(let user of this.usersArr){
-        console.log('User' + user.name);
-      }
-    }
 }
 
 

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Genre } from 'src/app/interfaces/genre';
 import { User } from 'src/app/interfaces/user';
 import { Genres } from 'src/app/interfaces/genres';
+import { Movie, Movies } from 'src/app/interfaces/movie';
 
 
 @Injectable({
@@ -12,23 +13,22 @@ import { Genres } from 'src/app/interfaces/genres';
 
 @Injectable({providedIn: 'root'})
 export class MoviesapiService {
- 
-  movies = ["movie1", "movie2", "movie3"];
-  readonly rootUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=';
-  private readonly api_key = 'f300e933685acb83d84aa24df1bb7170';
-  JSONplaceholder = 'https://jsonplaceholder.typicode.com/users';
+  private readonly rootUrl = 'https://api.themoviedb.org/3/movie';
+  private readonly apiKey = 'f300e933685acb83d84aa24df1bb7170';
 
   
+  
 
-  constructor(private httpClient : HttpClient) {}
+  constructor(private httpClient: HttpClient) {}
 
-  getGenres(): Observable<Genres>{
-    console.log(this.httpClient.get<Genres>('https://api.themoviedb.org/3/genre/movie/list?api_key=f300e933685acb83d84aa24df1bb7170'));
-    return this.httpClient.get<Genres>('https://api.themoviedb.org/3/genre/movie/list?api_key=f300e933685acb83d84aa24df1bb7170');
+  getAllMovies(): Observable<Movies> {
+    return new Observable<Movies>;
   }
 
-  getUsers(): Observable<User[]>{
-    return this.httpClient.get<User[]>(this.JSONplaceholder);
+  getTopRatedMovies(): Observable<Movies> {
+    const headers = { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMzAwZTkzMzY4NWFjYjgzZDg0YWEyNGRmMWJiNzE3MCIsInN1YiI6IjY1MDc2NmY1MzczYWMyMDBhY2Q3MDFmYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.EDoLzgqvWQJa4LtkwNxYlXXSqoZFeYMv4vjJcGuZX5Q'}
+    let page = '?1';
+    return this.httpClient.get<Movies>(this.rootUrl + '/top_rated' + page, {headers: headers});
   }
-
+  
 }
