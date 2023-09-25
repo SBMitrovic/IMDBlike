@@ -1,8 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { MoviesComponent } from './movies/movies.component';
+import { HomeComponent } from './components/home/home.component';
+import { AboutComponent } from './components/about/about.component';
+import { MoviesComponent } from './components/movies/movies.component';
+import { MovieDetailsModule } from './components/movie-details/movie-details.module';
+import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
+import { GenreComponent } from './components/genres/genre.component';
+import { PersonComponent } from './components/person/person.component';
+
 
 
 const routes: Routes = [
@@ -24,8 +29,20 @@ const routes: Routes = [
   {
     path: 'movies',
     component: MoviesComponent
+  },
+  {
+    path: 'movies/:id',
+    component: MovieDetailsComponent
+  },
+
+  {
+    path: 'genres/:id',
+    component: GenreComponent
+  },
+  {
+    path: 'person/:id',
+    component: PersonComponent
   }
-  
 ];
 
 

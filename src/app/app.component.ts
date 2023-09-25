@@ -1,26 +1,45 @@
-import { Component } from '@angular/core';
-import { MoviesapiService } from './movies/services/moviesapi.service';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-
+import { Component, OnInit } from '@angular/core';
+import { Genre } from './interfaces/genre';
+import { Router, NavigationStart, NavigationEnd } from '@angular/router';
+import {ThemePalette} from '@angular/material/core';
+import {ProgressSpinnerMode} from '@angular/material/progress-spinner';
+import { GenresService } from './services/genres.service';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['./app.component.sass']
+  styleUrls: ['./app.component.scss']
 })
 
 
-export class AppComponent {
-  title = 'IMDBlike';
+export class AppComponent implements OnInit{
   
-//  private const rootUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=f300e933685acb83d84aa24df1bb7170';
-  private readonly api_key = 'f300e933685acb83d84aa24df1bb7170';
+  genresArr : Genre[] = [];
+  selectedGenreIds: string[] | undefined;
+  loading = true;
+  color: ThemePalette = 'warn';
+  mode: ProgressSpinnerMode = 'indeterminate';
+  value = 50;
 
-  JSONplaceholder = 'https://jsonplaceholder.typicode.com/users';
-   
-  
+
+  constructor(private genreService : GenresService, private router : Router){
+    
+    
+    router.events.subscribe(event => {
+      if (event instanceof NavigationStart) {
+        this.loading = true;
+      } else if (event instanceof NavigationEnd) {
+        setTimeout (() => {
+          this.loading = false;
+       }, 1000);
+      }
+    });
+    
+  }
+  ngOnInit(){
+
+  }
 
 
 
