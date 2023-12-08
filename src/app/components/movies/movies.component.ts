@@ -12,7 +12,7 @@ import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-movies',
   templateUrl: './movies.component.html',
-  styleUrls: ['./movies.component.sass']
+  styleUrls: ['./movies.component.css']
 })
 
 export class MoviesComponent implements OnInit {

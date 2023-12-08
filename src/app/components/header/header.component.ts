@@ -9,7 +9,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   title = 'IMDBLike';
@@ -29,11 +29,7 @@ export class HeaderComponent implements OnInit {
     this.getGenres();
   }
 
-  searchByGenre(id: any) {
-    this.moviesService.getMoviesByGenre(id).subscribe(res  => {
-      this.moviesArr = res.results;
-    })
-  }
+ 
   getGenres() {
     this.genreService.getAllGenres().subscribe(res => this.genresArr = res.genres);
   }

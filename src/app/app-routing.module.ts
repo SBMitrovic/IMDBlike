@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
@@ -7,7 +7,9 @@ import { MovieDetailsModule } from './components/movie-details/movie-details.mod
 import { MovieDetailsComponent } from './components/movie-details/movie-details.component';
 import { GenreComponent } from './components/genres/genre.component';
 import { PersonComponent } from './components/person/person.component';
-
+import { LoginComponent } from 'src/app/components/registration/login/login.component';
+import { RegisterComponent } from 'src/app/components/registration/register/register.component';
+import { PeopleComponent } from './components/people/people.component';
 
 
 const routes: Routes = [
@@ -42,7 +44,27 @@ const routes: Routes = [
   {
     path: 'person/:id',
     component: PersonComponent
+  },
+  {
+    path : 'login',
+    component : LoginComponent
+  },
+  {
+    path : 'register',
+    component : RegisterComponent
+  },
+  {
+    path : 'people',
+    component: PeopleComponent
+  },
+  {
+    path : '**',
+    redirectTo : '/home',
+    pathMatch : 'full'
   }
+
+
+
 ];
 
 

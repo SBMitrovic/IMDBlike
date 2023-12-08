@@ -1,49 +1,66 @@
-
-
-<p> movies works</p>
-
-<form>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <div class="input-group">
-                    <input type="text" class="form-control searchdesign" placeholder="Search for movies..." [(ngModel)]="searchString"
-                        name="searchString" (keyup.enter)="searchMovies()">
-                    <span class="input-group-btn">
-                        <button class="btn btn-primary btnDesign" type="button" (click)="searchMovies()">Go!</button>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>    
-  </form>
-
-<div *ngFor="let movie of moviesArr">
-  <div>
-      <h5>Name : {{movie.title}}, ID: {{movie.id}}</h5>
-      <img height="150" width="150" src="https://image.tmdb.org/t/p/w185{{movie.poster_path}}">
+<div id="carouselBasicExample" class="carousel slide carousel-fade" data-mdb-ride="carousel">
+  <!-- Indicators -->
+  <div class="carousel-indicators">
+    <button
+      type="button"
+      data-mdb-target="#carouselBasicExample"
+      data-mdb-slide-to="0"
+      class="active"
+      aria-current="true"
+      aria-label="Slide 1"
+    ></button>
+    <button
+      type="button"
+      data-mdb-target="#carouselBasicExample"
+      data-mdb-slide-to="1"
+      aria-label="Slide 2"
+    ></button>
+    <button
+      type="button"
+      data-mdb-target="#carouselBasicExample"
+      data-mdb-slide-to="2"
+      aria-label="Slide 3"
+    ></button>
   </div>
 
-</div>  
-
-<ng-container *ngIf="searchResults">
-  <app-skeleton *ngIf="loader"></app-skeleton>
-  <div class="row" *ngIf="!loader">
-      <div class="col-md-2 listing__items" *ngFor="let movie of searchResults | slice:0:18">
-          <div [routerLink]="['/movies/', movie.id]">
-              <div class="listing-item-style">
-                  <div class="overlay">
-                      <div class="hover"><i class="material-icons">play_arrow</i> PLAY NOW</div>
-                  </div>
-                  <img *ngIf="movie?.poster_path" src="https://image.tmdb.org/t/p/w370_and_h556_bestv2/{{movie?.poster_path}}"
-                      [alt]="movie.title">
-                 
-                  <h6>{{ movie?.title }}</h6>
-                  <p class="rate"><i class="material-icons">star</i><span>{{movie?.vote_average}}</span> /10</p>
-                  <p class="year"><span>{{movie?.release_date | date: 'yyyy'}}</span>
-                  </p>
-              </div>
-          </div>
+  <!-- Inner -->
+  <div class="carousel-inner">
+    <!-- Single item -->
+    <div class="carousel-item active">
+      <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(15).webp" class="d-block w-100" alt="Sunset Over the City"/>
+      <div class="carousel-caption d-none d-md-block">
+        <h5>First slide label</h5>
+        <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
       </div>
+    </div>
+
+    <!-- Single item -->
+    <div class="carousel-item">
+      <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(22).webp" class="d-block w-100" alt="Canyon at Nigh"/>
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Second slide label</h5>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+      </div>
+    </div>
+
+    <!-- Single item -->
+    <div class="carousel-item">
+      <img src="https://mdbcdn.b-cdn.net/img/Photos/Slides/img%20(23).webp" class="d-block w-100" alt="Cliff Above a Stormy Sea"/>
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Third slide label</h5>
+        <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+      </div>
+    </div>
   </div>
-</ng-container>
+  <!-- Inner -->
+
+  <!-- Controls -->
+  <button class="carousel-control-prev" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-mdb-target="#carouselBasicExample" data-mdb-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>

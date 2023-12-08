@@ -22,16 +22,12 @@
             <a class="nav-link disabled" href="#">Disabled</a>
           </li>
         </ul>
-     
       </div>
       <select name="browseByGenre" aria-placeholder="Browse by genre" >
-      
-        <option *ngFor="let genre of genresArr" routerLink="/genres/{{genre.id}}" 
-        (click)="this.genreComponent.searchByGenre((genre.id).toString())"  (keyup.enter)="searchByGenre(genre.id.toString())" >
+        <option *ngFor="let genre of genresArr" [routerLink]="['/genres/', genre.id]"
+        (click)="this.genreComponent.searchByGenre((genre.id).toString())">
           {{genre.name}}</option>
       </select>
-     
     </nav>
-   
   </header>
 

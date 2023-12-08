@@ -8,7 +8,7 @@ import {MatDialog} from '@angular/material/dialog';
 @Component({
   selector: 'app-movie-details',
   templateUrl: './movie-details.component.html',
-  styleUrls: ['./movie-details.component.sass']
+  styleUrls: ['./movie-details.component.css']
 })
 export class MovieDetailsComponent implements OnInit{
   public id : any; 

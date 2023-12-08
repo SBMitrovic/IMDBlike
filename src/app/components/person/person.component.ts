@@ -5,7 +5,7 @@ import { MoviesapiService } from 'src/app/services/moviesapi.service';
 @Component({
   selector: 'app-person',
   templateUrl: './person.component.html',
-  styleUrls: ['./person.component.scss']
+  styleUrls: ['./person.component.css']
 })
 
 export class PersonComponent implements OnInit {
