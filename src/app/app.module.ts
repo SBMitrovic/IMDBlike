@@ -50,6 +50,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
+import{MovieDetailsModule} from './components/movies/movies.module';
+
+
+
 
 export const LOCALSTORAGE_TOKEN_KEY = 'angular_material_login_and_register_example';
 
@@ -88,7 +92,7 @@ export function tokenGetter() {
     MatCardModule,
     MatSnackBarModule,
     ReactiveFormsModule,
-
+    
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,
@@ -104,7 +108,7 @@ export function tokenGetter() {
     MdbTabsModule,
     MdbTooltipModule,
     
-
+    MovieDetailsModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,

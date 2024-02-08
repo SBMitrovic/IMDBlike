@@ -21,7 +21,7 @@ export class GenreComponent implements OnInit {
       this.urlArr = this.route.url.split('/');
       this.searchByGenre(this.urlArr[2]);
       console.log('Na ng initu : ' + this.urlArr);
-      this.route.routeReuseStrategy.shouldReuseRoute = () => false;
+//      this.route.routeReuseStrategy.shouldReuseRoute = () => false;
 //      this.getSingleMovieVideos(this.id);
 //      this.getCast(this.id);
 //      this.getBackropsImages(this.id);
@@ -41,7 +41,7 @@ export class GenreComponent implements OnInit {
   } 
 
 
-    searchByGenre(id : string){
+    searchByGenre(id : string, event? : Event) {
     this.moviesArr = [] ;
     this.moviesService.getMoviesByGenre(id).subscribe(res => {
       this.moviesArr = res.results;  

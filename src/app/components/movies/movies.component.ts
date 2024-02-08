@@ -26,13 +26,16 @@ export class MoviesComponent implements OnInit {
   constructor(private moviesService: MoviesapiService,private genresService : GenresService) {}
     
   ngOnInit(){
-   this.getTopratedMovies(4);
+   this.getTopratedMovies(1);
+   console.log(("MoviesArr:"));	
+   console.log((this.moviesArr));
   }
 
 
   getTopratedMovies(page : number) {
     this.moviesService.getTopRatedMovies(page).pipe(delay(1000)).subscribe(res => {
       this.moviesArr = res.results,
+      console.log(res.results);
       this.totalResults = res.total_results;
       this.loader = false;
     });

@@ -27,6 +27,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.getGenres();
+    this.route.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
  

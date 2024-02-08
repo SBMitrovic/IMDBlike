@@ -1,0 +1,15 @@
+.navbar-brand{
+    font-size: 25px;
+    padding-left: 30px;
+    padding-right: 50px;
+}
+
+.searchbar-form {
+    margin-right: 500px;
+    max-width: 300px;
+    
+}
+
+.searchbar-form button{
+    background-color: azure;
+}
