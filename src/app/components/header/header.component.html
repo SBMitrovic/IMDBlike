@@ -30,12 +30,15 @@
         </form>
       </div>
       
-
+    <div>
       <select name="browseByGenre" aria-placeholder="Browse by genre" >
+        
         <option *ngFor="let genre of genresArr" [routerLink]="['/genres/', genre.id]"
-        (ngClick)="this.genreComponent.searchByGenre((genre.id).toString())">
+        (onClick)="this.genreComponent.searchByGenre((genre.id).toString())">
           {{genre.id}}</option>
-      </select>
+        
+        </select>
+      </div>
     </nav>
   </header>
 
