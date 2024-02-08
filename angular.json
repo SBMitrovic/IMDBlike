@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "IMDBlike:build:production"
+              "buildTarget": "IMDBlike:build:production"
             },
             "development": {
-              "browserTarget": "IMDBlike:build:development"
+              "buildTarget": "IMDBlike:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "IMDBlike:build"
+            "buildTarget": "IMDBlike:build"
           }
         },
         "test": {
