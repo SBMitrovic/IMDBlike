@@ -1,21 +1,25 @@
-.full-page-width {
-    width: 100%;
-    overflow: hidden;
-    background-color: #ccc;
-    height: 500px;
-    border: black 2px solid;
-}
-.center-content-container {
-    width: 260px;
-    margin: 0 auto;
-    border: black 2px solid;
-}
+.body { 
+    padding: 0; 
+    margin: 0; 
+} 
 
-.content-container {
-    width: 100%;
-    background-color: #aaa;
-    margin: 0 auto;
-    padding: 20px;
-    border: black 2px solid;
+.Parent { 
+    display: flex; 
+    flex-direction: row; 
+} 
 
-}
+.child1 { 
+    width: 70%; 
+    height: 100vh; 
+    background-color: green; 
+    text-align: center; 
+    color: white; 
+} 
+
+.child2 { 
+    width: 30%; 
+    padding: 30px; 
+    height: 100vh; 
+    border: green solid 5px; 
+    margin: 50px; 
+} 

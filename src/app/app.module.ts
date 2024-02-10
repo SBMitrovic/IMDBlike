@@ -18,7 +18,8 @@ import { PersonComponent } from './components/person/person.component';
 import { ProfileComponent } from './components/registration/profile/profile.component';
 import { LoginComponent } from './components/registration/login/login.component';
 import { RegisterComponent } from './components/registration/register/register.component';
-
+	
+import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { MatCardModule } from '@angular/material/card';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -107,7 +108,7 @@ export function tokenGetter() {
     MdbScrollspyModule,
     MdbTabsModule,
     MdbTooltipModule,
-    
+    NgbCarouselModule,
     MovieDetailsModule,
     JwtModule.forRoot({
       config: {
