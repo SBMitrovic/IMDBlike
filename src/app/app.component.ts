@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit , ViewEncapsulation} from '@angular/core';
 import { Genre } from './interfaces/genre';
 import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 import {ThemePalette} from '@angular/material/core';
@@ -9,7 +9,8 @@ import { GenresService } from './services/genres.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 
 

@@ -1,25 +1,42 @@
 .body { 
     padding: 0; 
     margin: 0; 
+    background-color: 28, 31, 29;
 } 
 
 .Parent { 
+    width: 90%;
+    margin: auto;
     display: flex; 
     flex-direction: row; 
 } 
 
 .child1 { 
+    margin-top: 30px;
     width: 70%; 
-    height: 100vh; 
-    background-color: green; 
+    height: 100%; 
+    background-color: black;  
     text-align: center; 
     color: white; 
-} 
-
+}
+.carousel{
+    background-size: cover;
+   
+    width: 100%;
+    height: 100%;
+    margin:auto
+}
+.picsum-img-wrapper img{
+    width: 100%;
+    height: 80vh;
+    
+}
 .child2 { 
+    margin-top: 30px;
     width: 30%; 
     padding: 30px; 
-    height: 100vh; 
-    border: green solid 5px; 
-    margin: 50px; 
-} 
+    height:80vh;
+    background-color: black; 
+    justify-content: space-evenly;
+}
+
