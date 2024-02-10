@@ -62,7 +62,7 @@ export class MoviesapiService {
   }
 
   getMovieVideos(id: string): Observable<any> {
-    return this.httpClient.get(`${this.rootUrl}movie/${id}/videos?api_key=${this.apiKey}`);
+    return this.httpClient.get(`${this.rootUrl}movie/${id}/videos?language=${this.language}`, {headers: this.bearerToken});
   }
 
   getRecomendMovies(id: string): Observable<any> {
@@ -79,6 +79,11 @@ export class MoviesapiService {
 
   getPersonCast(id: string): Observable<any> {
     return this.httpClient.get(`${this.rootUrl}person/${id}/movie_credits?api_key=${this.apiKey}`);
+  }
+
+
+  getUpcoingMovies(page : number) : Observable<any>{
+    return this.httpClient.get(`${this.rootUrl}movie/upcoming?language=${this.language}&page=${page}`, {headers: this.bearerToken});
   }
 
 

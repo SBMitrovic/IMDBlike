@@ -1,0 +1,91 @@
+.Navbar {
+    background-color: #292828;
+    display: flex;
+    padding: 16px;
+    font-family: sans-serif;
+    color: white;
+    transparency: 0.5;
+  }.Navbar__Link {
+    padding-left: 15px;
+  }.Navbar__Items {
+    display: flex;
+    padding-top: 3px;
+    margin-left: 3%;
+    padding-left: 20px;
+  }.Navbar__Items--right {
+    margin-left:auto;
+  }.Navbar__Link-toggle {
+    display: none;
+  }.Navbar__Link-brand{
+    font-size: 20px;
+    font-size: bold;
+  }
+    .search{
+      display: inline;
+      width: 50em;
+      margin-left: 10em;     
+      padding-top: 3px; 
+    }
+    .search-form-input{
+      display: inline;
+      width: 70%;	
+      border : none;
+    }
+    .search-form-button{
+      display: inline;
+      width: 10%;
+      background-color: white;
+      border: none;
+    }
+
+    .genre{
+      margin-right: 3em;
+    }
+
+
+  @media only screen and (max-width: 768px) {
+    .Navbar__Items,
+    .Navbar {
+      flex-direction: column;
+    }.Navbar__Items {
+      display:none;
+    }.Navbar__Items--right {
+      margin-left:0;
+
+      
+    }.Navbar__ToggleShow {
+      display: flex;
+    }.Navbar__Link-toggle {
+      align-self: flex-end;
+      display: initial;
+      position: absolute;
+      cursor: pointer;
+     }
+     
+     .search{
+      display: block;
+      float:center;
+      width: 200px;
+      margin-left: 30%;      
+    }
+    .search-form-input{
+      display: flex-end;
+      width:80%;
+    }
+    .search-form-button{
+      display: flex-end;
+      width:20%;
+   }
+
+   .genre{
+    display: block;
+    float:center;
+   }
+
+
+
+     
+
+
+    
+  }

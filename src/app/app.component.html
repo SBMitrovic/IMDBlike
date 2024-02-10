@@ -1,5 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
+<head>
+
+<script> 
+const navs = [];
+        function classToggle() {
+        
+           navs = document.querySelectorAll('.Navbar__Items')
+          
+          navs.forEach(nav => nav.classList.toggle('Navbar__ToggleShow'));
+        }document.querySelector('.Navbar__Link-toggle')
+          .addEventListener('click', classToggle);
+    
+</script>
+</head>
 <body>
 <app-header></app-header>
 
@@ -14,6 +28,7 @@
 <br>
 <br>
 <br>
+
 <app-footer></app-footer>
 </body>
 </html>
