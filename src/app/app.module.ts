@@ -30,7 +30,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {JwtModule} from '@auth0/angular-jwt';
-
+import {MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
@@ -92,7 +92,7 @@ export function tokenGetter() {
     MatCardModule,
     MatSnackBarModule,
     ReactiveFormsModule,
-    
+    MatSlideToggleModule,
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,
