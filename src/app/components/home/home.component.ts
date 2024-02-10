@@ -7,7 +7,7 @@ import { MoviesapiService } from 'src/app/services/moviesapi.service';
 })
 export class HomeComponent {
   moviesArr : any;
-
+  display = "none";
     constructor(private movieService : MoviesapiService) {
       this.moviesArr = [];
     }
@@ -16,4 +16,12 @@ export class HomeComponent {
         this.moviesArr = this.movieService.getUpcoingMovies(5).subscribe(res => this.moviesArr = res.results);
         console.log(this.moviesArr);
     }
+
+    openModal() {
+      this.display = "block";
+    }
+    onCloseHandled() {
+      this.display = "none";
+    }
+  
 }

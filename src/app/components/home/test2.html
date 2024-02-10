@@ -1,0 +1,56 @@
+
+<!DOCTYPE html> 
+<html lang="en"> 
+  
+<head> 
+    <title> 
+        Check twitter Bootstrap is loaded or not 
+    </title> 
+    <meta charset="utf-8"> 
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1"> 
+    <link rel="stylesheet" href= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> 
+  
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> 
+    </script> 
+  
+    <script src= 
+"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"> 
+    </script> 
+  
+    <script src= 
+"https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"> 
+    </script> 
+  
+    <style> 
+        .disabled { 
+            pointer-events: auto !important; 
+        } 
+    </style> 
+</head> 
+  
+<body> 
+    <center> 
+        <h1 class="text-success">GeeksforGeeks</h1> 
+        <b>A Computer Science Portal for Geeks</b> 
+    </center> 
+    <script> 
+    if (!$.fn.modal) { 
+        alert('CDN Bootstrap is not working'); 
+        
+        // Replace your_path with path where 
+        // local bootstrap is stored 
+        document.write('<script src= 
+"Your_path_locall_one/bootstrap.min.js"></scr+ipt>'); 
+        document.write('<link href= 
+"Your_path_locall_one/bootstrap.min.css" rel="stylesheet">') 
+    } else { 
+        alert('CDN Bootstrap is loaded'); 
+    } 
+    </script> 
+</body> 
+  
+  
+</html> 
