@@ -11,8 +11,8 @@ import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-movies',
-  templateUrl: './movies.component.html',
-  styleUrls: ['./movies.component.css']
+  templateUrl: './movies2.html',
+  styleUrls: ['./movies2.css']
 })
 
 export class MoviesComponent implements OnInit {

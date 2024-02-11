@@ -1,0 +1,85 @@
+.container {
+    width: 90%;
+    margin:auto;
+    height: auto;
+}
+.items {
+    
+    width: 33%;
+    height: 400px;
+    
+    margin-bottom: 50px;
+    display: inline;
+    float:left;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    
+    border-radius: 20px;
+    max-width: 280px;
+
+}
+
+.items :hover{
+    color: rgb(189, 59, 59);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    border-radius: 20px 20px 0 0;
+}
+
+.filmes-content {
+    display: flex;
+}
+
+.opcoes {
+    display: flex;
+    justify-content: space-between;
+}
+
+.opcoes span {
+    float: right;
+    font-weight: bold;
+}
+
+figure,
+figure img {
+    border-radius: 20px 20px 0 0;
+}
+
+figcaption {
+    background-color: white;
+    margin: 20;
+    display: block;
+    padding: 10px;
+    border-radius: 0 0 20px 20px;
+
+}
+
+figure {
+    flex: 0 0 33.333333%;
+    margin: 10px;
+    background-color: white;
+    border-radius: 20px;
+    width: 400px;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+figure .container-img {
+    position: relative;
+    width: 200px;
+}

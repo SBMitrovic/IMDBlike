@@ -57,7 +57,7 @@ export class MoviesapiService {
     return this.httpClient.get(`${this.rootUrl}movie/${id}/credits?api_key=${this.apiKey}`);
   }
 
-  getBackdropsImages(id: string) {
+  getBackdropsImages(id: string)  {
     return this.httpClient.get(`${this.rootUrl}movie/${id}/images?api_key=${this.apiKey}`);
   }
 
