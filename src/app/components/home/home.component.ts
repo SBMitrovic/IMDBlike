@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MoviesapiService } from 'src/app/services/moviesapi.service';
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+
+
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,9 +14,13 @@ export class HomeComponent {
   moviesArr : any;
   display = "none";
   images = [];
+  active_movie_id : number | undefined;
+
+//  @ViewChild('currentMovieOnCarousel') currentMovieOnCarousel: NgbCarouselModule ;
+
     constructor(protected movieService : MoviesapiService) {
       this.moviesArr = [];
-      
+     
     }
 
     ngOnInit(): void {
@@ -29,7 +36,22 @@ export class HomeComponent {
     onCloseHandled() {
       this.display = "none";
     }
-    
-//    images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
+
+    getMovieVideo(id : string){
+      this.movieService.getMovieVideos(id);
+    }
+
+    getActiveMovieId(){
+
+    }
+    setActiveMovieId(id: any){
+      console.log("Setting movie_id for" + id);
+      this.active_movie_id = id;
+
+      console.log("Currently active movie id is " ,this.active_movie_id);
+    }
+
+
+
 
 }

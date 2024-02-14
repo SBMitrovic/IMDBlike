@@ -3,7 +3,7 @@
     display: flex;
     padding: 16px;
     font-family: sans-serif;
-    color: white;
+    background-color: wheat;
     transparency: 0.5;
   }.Navbar__Link {
     padding-left: 15px;
@@ -12,6 +12,7 @@
     padding-top: 3px;
     margin-left: 3%;
     padding-left: 20px;
+    word-wrap: normal;
   }.Navbar__Items--right {
     margin-left:auto;
   }.Navbar__Link-toggle {
@@ -19,6 +20,9 @@
   }.Navbar__Link-brand{
     font-size: 20px;
     font-size: bold;
+  }.nav-link-long{
+    font-family: monospace;
+    word-wrap: normal;
   }
     .search{
       display: inline;

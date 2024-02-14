@@ -8,7 +8,9 @@
     width: 90%;
     margin: auto;
     display: flex; 
-    flex-direction: row; 
+    flex-direction: row;
+    height: 100vh;
+
 } 
 
 .child1 { 
@@ -18,26 +20,80 @@
     background-color: black;  
     text-align: center; 
     color: white; 
-
-}
-.carousel{
-    background-size: cover;
-   
-    width: 100%;
-    height: 100%;
-    margin:auto
-}
-.picsum-img-wrapper img{
-    width : 60;
-    height: 100vh;
+    position: relative;
     
 }
 .child2 { 
     margin-top: 30px;
     width: 30%; 
     padding: 30px; 
-    height:100vh;
+    height:100%;
     background-color: black; 
     justify-content: space-evenly;
+    
+    overflow: auto;
 }
+
+/* Child1 components, deep tags needed to target ng-bootstrap nested clasess */
+
+.overlay-div{
+    border: 2px solid white;
+    width: 24%;
+    height: 35%;
+    justify-content: center;
+    word-wrap: break-word;
+    background-color: yellow;
+    opacity: 50%;
+    position: absolute;
+    bottom: 20px;
+    left:50px;
+    
+}
+/deep/ .carousel.slide{
+    background-size: cover;
+    
+    width: 100%;
+    height: 100%;
+    margin:auto;
+}
+/deep/ .carousel-inner{
+    height: 100%;
+}
+/deep/ .carousel-item.active{
+    width: 100%;
+    height: 100%;
+}
+/deep/ .picsum-img-wrapper {
+    width: 100%;
+    height:100vh;
+}
+/deep/ .picsum-img-wrapper img {
+    width: 100%;
+    height: 100%;
+}
+ /deep/ .carousel-indicators, .carousel-caption {
+    display: none;
+}
+
+/deep/ .carousel-control-prev {
+    height: 15%;
+    margin: auto;
+}
+/deep/ .carousel-control-next {
+    height: 15%;
+    margin: auto;
+
+}
+
+.Parent2{
+    margin: auto;
+    background-color: yellow;
+    opacity: 20%;
+}
+
+
+
+
+
+
 

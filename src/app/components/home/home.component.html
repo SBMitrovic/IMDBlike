@@ -2,19 +2,32 @@
 <div class="Parent"> 
 	<div class="child1"> 
 		<ngb-carousel class="carousel">
-			<ng-template ngbSlide *ngFor="let movie of moviesArr">
+			<ng-template ngbSlide *ngFor="let movie of moviesArr; let i = index" 
+			#currentMovieOnCarousel>
+				
 				<div class="picsum-img-wrapper">
-					<img src="https://image.tmdb.org/t/p/w185{{movie.poster_path}}" alt="Random first slide"/>	
+					<img src="https://image.tmdb.org/t/p/original{{movie.poster_path}}" alt="Random first slide"/>	
 				</div>
 				<div class="carousel-caption">
 					<h3>{{movie.title}}</h3>
 					<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
 				</div>
+
+				<div class="overlay-div"> <p>I m overlayed {{movie.id}}</p>
+			
+					<!--	<video width="320" height="240" controls>
+							<source src="getMovieVideo({{M.id}})" type="video/mp4">
+							<source src="getMovieVideo({{MOVIE.id}})" type="video/webm">
+							Your browser does not support the video tag.
+						  </video> -->
+				</div>
 			</ng-template>
 		</ngb-carousel>
+		
 	</div> 
 	<div class="child2"> 
-		<h2> 
+
+		<p> 
 			We provide a variety of services  
 			for you to learn, thrive and also  
 			have fun! Free Tutorials, Millions  
@@ -25,10 +38,51 @@
 			and Job Opportunities.
 			aaa
 			a
-		</h2> 
+		</p>
+		<p> 
+			We provide a variety of services  
+			for you to learn, thrive and also  
+			have fun! Free Tutorials, Millions  
+			of Articles, Live, Online and  
+			Classroom Courses ,Frequent Coding  
+			Competitions, Webinars by Industry  
+			Experts, Internship opportunities  
+			and Job Opportunities.
+			aaa
+			a
+		</p>
+		<p> 
+			We provide a variety of services  
+			for you to learn, thrive and also  
+			have fun! Free Tutorials, Millions  
+			of Articles, Live, Online and  
+			Classroom Courses ,Frequent Coding  
+			Competitions, Webinars by Industry  
+			Experts, Internship opportunities  
+			and Job Opportunities.
+			aaa
+			a
+		</p>
+		<p> 
+			We provide a variety of services  
+			for you to learn, thrive and also  
+			have fun! Free Tutorials, Millions  
+			of Articles, Live, Online and  
+			Classroom Courses ,Frequent Coding  
+			Competitions, Webinars by Industry  
+			Experts, Internship opportunities  
+			and Job Opportunities.
+			aaa
+			a
+		</p>
+
+		<div class="form-check form-switch">
+			<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+			<label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+		  </div>
+		 
 	</div> 
 </div> 
 <div class="Parent2">
-
-
+ID : {{this.active_movie_id}}
 </div>

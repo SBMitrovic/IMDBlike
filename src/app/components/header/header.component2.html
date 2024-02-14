@@ -24,7 +24,7 @@
       <a class="nav-link" href="/about">About</a>
      </div>
      <div class="Navbar__Link">
-      <a class="nav-link" href="/movies">Top rated movies <span class="sr-only">(current)</span></a>
+      <a class="nav-link-long" href="/movies">Top rated movies <span class="sr-only">(current)</span></a>
      </div>
    </nav>
    
@@ -42,7 +42,7 @@
         
         <option *ngFor="let genre of genresArr" [routerLink]="['/genres/', genre.id]"
         (onClick)="this.genreComponent.searchByGenre((genre.id).toString())">
-          {{genre.id}}</option>
+          {{genre.name}}</option>
         
         </select>
      </div>

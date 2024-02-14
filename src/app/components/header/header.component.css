@@ -1,23 +1,67 @@
-
-
-.navbar-brand{
-    font-size: 25px;
-    padding-left: 30px;
-    padding-right: 50px;
+body{
+    width: 100%;
 }
+app-header{
+    width: 100%;
+}
+.container{
+   
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid red;
+    height:8vh;
+    width: 100%;
+    margin: 0;
 
-.searchbar-form {
-    margin-right: 500px;
-    max-width: 500px;
+    
     
 }
 
-.searchbar-form button{
-    background-color: azure;
+.logo{
+    width:  10%;
+    vertical-align: middle;
+    float: left;
+    align-content: flex-start;
+   
+    
 }
 
+.links{
+    width: 20%;
+    justify-content: space-around;
+    float: left;
+    vertical-align: middle;
+    flex-grow: 1;
+}
+.links a{
+    width :20%;
+    height: 100%;
+    vertical-align: middle;
+    padding-left: 2%;
+}
 
-.genre{
-    margin-right: 20px;
+.search{
+    width: 100%;
+    vertical-align: middle;
+    flex-grow: 1;
+    width:300px;
+    flex-basis: auto;
+}
 
+.search input{
+    width :80%;
+}
+
+.toogle-genre{
+    width: 30%;
+    vertical-align: middle;
+    float: right;
+    flex-grow: 1;
+}
+
+.toogle-genre select{
+    width: 50%;
+    float: right;
 }

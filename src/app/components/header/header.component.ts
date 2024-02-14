@@ -8,8 +8,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component2.html',
-  styleUrls: ['./header.component2.css']
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
   title = 'IMDBLike';
