@@ -15,11 +15,12 @@
       </div>
 
       <div class="toogle-genre">
-        <select class="genre" name="browseByGenre" aria-placeholder="Browse by genre" >
-          <option *ngFor="let genre of genresArr" [routerLink]="['/genres/', genre.id]"
-          (onClick)="this.genreComponent.searchByGenre((genre.id).toString())">
-            {{genre.name}}</option>
-          </select>
+        <select class="genre" name="browseByGenre" (change)="this.genreComponent.onGenreChange($event)">
+          <option disabled selected>Browse by genre</option>
+          <option *ngFor="let genre of genresArr" [value]="genre.id">
+            {{ genre.name }}
+          </option>
+        </select>
       </div>
 
 </div>

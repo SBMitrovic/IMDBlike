@@ -43,7 +43,7 @@ export class MoviesapiService {
     return this.httpClient.get(`${this.rootUrl}movie/${id}`, {headers : this.bearerToken});
   }
   
-  getMoviesByGenre(id: string): Observable<Movies> {
+  getMoviesByGenre(id: string | undefined): Observable<Movies> {
     return this.httpClient.get<Movies>(`${this.rootUrl}genre/${id}/movies`, {headers : this.bearerToken});
   }
 
