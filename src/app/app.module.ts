@@ -1,6 +1,7 @@
 import { NO_ERRORS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
@@ -18,6 +19,12 @@ import { PersonComponent } from './components/person/person.component';
 import { ProfileComponent } from './components/registration/profile/profile.component';
 import { LoginComponent } from './components/registration/login/login.component';
 import { RegisterComponent } from './components/registration/register/register.component';
+
+// Firebase imports
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
 	
 import { NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -30,7 +37,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import {JwtModule} from '@auth0/angular-jwt';
 import {MatSlideToggleModule } from '@angular/material/slide-toggle'
 
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
@@ -53,16 +59,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import{MovieDetailsModule} from './components/movies/movies.module';
 
-
-
-
-export const LOCALSTORAGE_TOKEN_KEY = 'angular_material_login_and_register_example';
-
-// specify tokenGetter for the angular jwt package
-export function tokenGetter() {
-  return localStorage.getItem(LOCALSTORAGE_TOKEN_KEY);
-}
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,6 +77,7 @@ export function tokenGetter() {
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
+    RouterModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
@@ -94,6 +91,8 @@ export function tokenGetter() {
     MatSnackBarModule,
     ReactiveFormsModule,
     MatSlideToggleModule,
+    
+    // MDB modules
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,
@@ -110,16 +109,15 @@ export function tokenGetter() {
     MdbTooltipModule,
     NgbCarouselModule,
     MovieDetailsModule,
-    JwtModule.forRoot({
-      config: {
-        tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:3000', 'localhost:8080']
-      }
-    }),
-            NgbModule
+    NgbModule
   
   ],
-  providers: [], //ovde se stavljaju zavisnosti za Dependency injection, kontejner instancira jednu instancu za cijelu aplikaciju
+  providers: [
+    // Firebase providers
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
+  ],
   bootstrap: [AppComponent],
   schemas: [NO_ERRORS_SCHEMA]
 })

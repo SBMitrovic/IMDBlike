@@ -1,55 +1,152 @@
-<!--
-<section class="filmes">
-    <div class="filmes-content">
-  
-      <div class="cards"  *ngFor="let movie of moviesArr">
-        <figure>
-          <div class="container-img">
-            <img src="https://image.tmdb.org/t/p/w185{{movie.poster_path}}" alt="Moonlight" style="width:100%">
-  
-            <div class="overlay">
-              <div class="text">
-                <span>{{movie.title}}</span>
+<!-- Modern Movies Page -->
+<div class="movies-page">
+  <!-- Header Section -->
+  <div class="page-header">
+    <div class="header-content">
+      <h1 class="page-title">
+        <i class="fas fa-film"></i>
+        Top Rated Movies
+      </h1>
+      <p class="page-subtitle">Discover the best movies of all time</p>
+    </div>
+    
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-wrapper">
+        <i class="fas fa-search search-icon"></i>
+        <input 
+          type="text" 
+          class="search-input"
+          placeholder="Search for movies..."
+          [(ngModel)]="searchString"
+          (input)="searchMovies()"
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-container" *ngIf="loader">
+    <div class="loading-spinner">
+      <i class="fas fa-film fa-spin"></i>
+    </div>
+    <p class="loading-text">Loading amazing movies...</p>
+  </div>
+
+  <!-- Movies Grid -->
+  <div class="movies-container" *ngIf="!loader">
+    <!-- Search Results -->
+    <div class="movies-grid" *ngIf="searchResults.length > 0">
+      <div class="movie-card" *ngFor="let movie of searchResults" 
+           [routerLink]="['/movies', movie.id]">
+        <div class="card-image">
+          <img 
+            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" 
+            [alt]="movie.title"
+            class="movie-poster"
+            loading="lazy"
+          >
+          <div class="card-overlay">
+            <div class="overlay-content">
+              <button class="play-button">
                 <i class="fas fa-play"></i>
+              </button>
+              <div class="movie-actions">
+                <button class="action-btn favorite">
+                  <i class="fas fa-heart"></i>
+                </button>
+                <button class="action-btn watchlist">
+                  <i class="fas fa-bookmark"></i>
+                </button>
               </div>
             </div>
           </div>
-          <figcaption>
-            <h4>{{movie.title}}</h4>
-            <h5>{{movie.genre_ids}}</h5>
-            <div class="opcoes">
-              <i class="fa fa-heart" aria-hidden="true"></i>
-              <span>{{movie.release_date}}</span>
-              <span>{{movie.vote_average}}</span>
-            </div>
-          </figcaption>
-        </figure>
-      </div>
-
--->
-
-<div class="container">
-    <div class="items"  *ngFor="let movie of moviesArr">
-      <figure>
-        <div class="container-img">
-          <img src="https://image.tmdb.org/t/p/w185{{movie.poster_path}}" alt="Moonlight" style="width:100%">
-
-          <div class="overlay">
-            <div class="text">
-              <span>{{movie.title}}</span>
-              <i class="fas fa-play"></i>
-            </div>
+          <div class="movie-rating">
+            <i class="fas fa-star"></i>
+            <span>{{ movie.vote_average | number:'1.1-1' }}</span>
           </div>
         </div>
-        <figcaption>
-          <h4>{{movie.title}}</h4>
-          <h5>{{movie.genre_ids}}</h5>
-          <div class="opcoes">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>{{movie.release_date}}</span>
-            <span>{{movie.vote_average}}</span>
+        
+        <div class="card-content">
+          <h3 class="movie-title">{{ movie.title }}</h3>
+          <p class="movie-date">{{ movie.release_date | date:'yyyy' }}</p>
+          <div class="movie-genres">
+            <span class="genre-tag" *ngFor="let genreId of movie.genre_ids?.slice(0,3)">
+              {{ getGenreName(genreId) }}
+            </span>
           </div>
-        </figcaption>
-      </figure>
+        </div>
+      </div>
     </div>
+
+    <!-- Top Rated Movies (Default) -->
+    <div class="movies-grid" *ngIf="searchResults.length === 0">
+      <div class="movie-card" *ngFor="let movie of moviesArr" 
+           [routerLink]="['/movies', movie.id]">
+        <div class="card-image">
+          <img 
+            [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" 
+            [alt]="movie.title"
+            class="movie-poster"
+            loading="lazy"
+          >
+          <div class="card-overlay">
+            <div class="overlay-content">
+              <button class="play-button">
+                <i class="fas fa-play"></i>
+              </button>
+              <div class="movie-actions">
+                <button class="action-btn favorite">
+                  <i class="fas fa-heart"></i>
+                </button>
+                <button class="action-btn watchlist">
+                  <i class="fas fa-bookmark"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="movie-rating">
+            <i class="fas fa-star"></i>
+            <span>{{ movie.vote_average | number:'1.1-1' }}</span>
+          </div>
+        </div>
+        
+        <div class="card-content">
+          <h3 class="movie-title">{{ movie.title }}</h3>
+          <p class="movie-date">{{ movie.release_date | date:'yyyy' }}</p>
+          <div class="movie-genres">
+            <span class="genre-tag" *ngFor="let genreId of movie.genre_ids?.slice(0,3)">
+              {{ getGenreName(genreId) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- No Results -->
+    <div class="no-results" *ngIf="searchString && searchResults.length === 0 && !loader">
+      <i class="fas fa-search"></i>
+      <h3>No movies found</h3>
+      <p>Try searching with different keywords</p>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-container" *ngIf="!loader && totalResults > 20">
+    <div class="pagination">
+      <button class="pagination-btn prev" (click)="loadPreviousPage()">
+        <i class="fas fa-chevron-left"></i>
+        Previous
+      </button>
+      
+      <div class="pagination-info">
+        <span>Page 1 of {{ Math.ceil(totalResults / 20) }}</span>
+      </div>
+      
+      <button class="pagination-btn next" (click)="loadNextPage()">
+        Next
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
 </div>

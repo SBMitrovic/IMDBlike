@@ -1,34 +1,280 @@
+/* ==========================================================================
+   Register Component Styles
+   ========================================================================== */
+
 :host {
   display: flex;
   justify-content: center;
-  margin: 100px 0px;
+  align-items: center;
+  min-height: calc(100vh - 8vh);
+  padding: var(--spacing-xl);
+  background: linear-gradient(135deg, var(--secondary-color), var(--background-dark));
 }
 
-mat-card {
+/* Registration Card */
+.register-card {
+  width: 100%;
   max-width: 600px;
+  background: var(--text-primary);
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  padding: var(--spacing-2xl);
+}
 
-  mat-card-title,
-  mat-card-content {
-    display: flex;
-    justify-content: center;
+.register-card-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
 
-    form {
-      .mat-form-field {
-        width: 100%;
-        min-width: 300px;
-      }
+.register-card-header h2 {
+  color: var(--secondary-color);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 var(--spacing-sm) 0;
+}
 
-      .error {
-        padding: 16px;
-        width: 300px;
-        color: white;
-        background-color: red;
-      }
+.register-card-header p {
+  color: var(--secondary-color);
+  opacity: 0.7;
+  font-size: var(--font-size-base);
+  margin: 0;
+}
 
-      .button {
-        display: flex;
-        justify-content: flex-end;
-      }
-    }
+/* Form Styles */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.form-field.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  color: var(--secondary-color);
+  font-weight: var(--font-weight-medium);
+  font-size: var(--font-size-sm);
+}
+
+.form-field input,
+.form-field select {
+  width: 100%;
+  padding: var(--spacing-md);
+  border: 2px solid #e1e5e9;
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
+  transition: border-color var(--transition-base);
+  background-color: #f8f9fa;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  background-color: var(--text-primary);
+}
+
+.form-field input::placeholder {
+  color: var(--text-secondary);
+}
+
+/* Checkbox Field */
+.checkbox-field {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  margin: var(--spacing-lg) 0;
+}
+
+.checkbox-field input[type="checkbox"] {
+  width: auto;
+  margin: 0;
+  transform: scale(1.2);
+  accent-color: var(--primary-color);
+}
+
+.checkbox-field label {
+  color: var(--secondary-color);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.checkbox-field a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-weight: var(--font-weight-medium);
+}
+
+.checkbox-field a:hover,
+.checkbox-field a:focus {
+  text-decoration: underline;
+}
+
+/* Error Message */
+.error-message {
+  padding: var(--spacing-md);
+  background-color: var(--error-color);
+  color: var(--text-primary);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  text-align: center;
+  margin: var(--spacing-md) 0;
+}
+
+.field-error {
+  color: var(--error-color);
+  font-size: var(--font-size-xs);
+  margin-top: var(--spacing-xs);
+}
+
+/* Submit Button */
+.submit-section {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--spacing-lg);
+}
+
+.submit-btn {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+  color: var(--secondary-color);
+  border: none;
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md) var(--spacing-2xl);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-transform: uppercase;
+  min-width: 200px;
+}
+
+.submit-btn:hover,
+.submit-btn:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(228, 187, 35, 0.4);
+}
+
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Additional Links */
+.form-links {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid #e1e5e9;
+}
+
+.form-links a {
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  transition: color var(--transition-base);
+}
+
+.form-links a:hover,
+.form-links a:focus {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Progress Indicator */
+.registration-progress {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.progress-steps {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.progress-step {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--border-radius-full);
+  background: #e1e5e9;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  transition: all var(--transition-base);
+}
+
+.progress-step.active {
+  background: var(--primary-color);
+  color: var(--secondary-color);
+}
+
+.progress-step.completed {
+  background: #28a745;
+  color: var(--text-primary);
+}
+
+.progress-line {
+  width: 60px;
+  height: 2px;
+  background: #e1e5e9;
+  transition: background-color var(--transition-base);
+}
+
+.progress-line.completed {
+  background: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  :host {
+    padding: var(--spacing-lg);
+  }
+  
+  .register-card {
+    padding: var(--spacing-xl);
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .register-card-header h2 {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: var(--spacing-lg);
+  }
+  
+  .progress-steps {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+  
+  .progress-line {
+    width: 2px;
+    height: 30px;
   }
 }

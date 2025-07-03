@@ -1,88 +1,248 @@
 
-<div class="Parent"> 
-	<div class="child1"> 
-		<ngb-carousel class="carousel">
-			<ng-template ngbSlide *ngFor="let movie of moviesArr; let i = index" 
-			#currentMovieOnCarousel>
-				
-				<div class="picsum-img-wrapper">
-					<img src="https://image.tmdb.org/t/p/original{{movie.poster_path}}" alt="Random first slide"/>	
-				</div>
-				<div class="carousel-caption">
-					<h3>{{movie.title}}</h3>
-					<p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-				</div>
+<!-- IMDb-Style Home Page -->
+<div class="home-container">
+  
+  <!-- Main Hero Section with Carousel -->
+  <section class="hero-section">
+    <!-- Loading State -->
+    <div class="loading-container" *ngIf="isLoading">
+      <div class="loading-spinner">
+        <i class="fa fa-spinner fa-spin fa-3x"></i>
+      </div>
+      <p class="loading-text">Loading amazing movies...</p>
+    </div>
+    
+    <!-- Error State -->
+    <div class="error-container" *ngIf="hasError && !isLoading">
+      <div class="error-content">
+        <i class="fa fa-exclamation-triangle fa-3x"></i>
+        <h3>Oops! Something went wrong</h3>
+        <p>{{ errorMessage }}</p>
+        <button class="btn btn-primary" (click)="loadTopRatedMovies()">
+          <i class="fa fa-refresh"></i>
+          Try Again
+        </button>
+      </div>
+    </div>
+    
+    <!-- Carousel Content -->
+    <div class="hero-carousel-wrapper" *ngIf="!isLoading && !hasError && moviesArr && moviesArr.length > 0"
+         [@fadeIn]="'in'">
+      <ngb-carousel 
+        #heroCarousel
+        class="hero-carousel" 
+        [interval]="autoplayEnabled ? 5000 : 0" 
+        [pauseOnHover]="true"
+        [pauseOnFocus]="true"
+        [wrap]="true"
+        [keyboard]="true"
+        [showNavigationArrows]="false"
+        [showNavigationIndicators]="false"
+        (slide)="onSlideChange($event)">
+        
+        <ng-template ngbSlide *ngFor="let movie of moviesArr; let i = index; trackBy: trackByMovieId">
+          <!-- Hero Slide -->
+          <div class="hero-slide" [attr.data-movie-id]="movie.id">
+            
+            <!-- Background Image -->
+            <div class="hero-background">
+              <img 
+                [src]="'https://image.tmdb.org/t/p/original' + movie.backdrop_path" 
+                [alt]="movie.title + ' backdrop'"
+                class="hero-bg-image"
+                loading="lazy"
+                (error)="onImageError($event)"/>
+              <div class="hero-gradient-overlay"></div>
+            </div>
+            
+            <!-- Hero Content -->
+            <div class="hero-content">
+              <div class="hero-info">
+                
+                <!-- Movie Poster Thumbnail -->
+                <div class="hero-poster">
+                  <img 
+                    [src]="'https://image.tmdb.org/t/p/w342' + movie.poster_path" 
+                    [alt]="movie.title + ' poster'"
+                    class="poster-image"
+                    loading="lazy"
+                    (error)="onImageError($event)"/>
+                  <button class="play-trailer-btn" (click)="playTrailer(movie.id)">
+                    <i class="fa fa-play"></i>
+                    <span>Watch Trailer</span>
+                  </button>
+                </div>
+                
+                <!-- Movie Details -->
+                <div class="hero-details">
+                  <div class="movie-meta">
+                    <span class="release-year">{{ movie.release_date | date:'yyyy' }}</span>
+                    <span class="runtime" *ngIf="movie.runtime">{{ movie.runtime }}min</span>
+                    <span class="rating" *ngIf="movie.vote_average">
+                      <i class="fa fa-star"></i>
+                      {{ movie.vote_average | number:'1.1-1' }}/10
+                    </span>
+                  </div>
+                  
+                  <h1 class="movie-title">{{ movie.title }}</h1>
+                  
+                  <div class="movie-genres" *ngIf="movie.genres && movie.genres.length > 0">
+                    <span class="genre-tag" *ngFor="let genre of movie.genres; trackBy: trackByGenreId">
+                      {{ genre.name }}
+                    </span>
+                  </div>
+                  
+                  <p class="movie-overview">
+                    {{ movie.overview | slice:0:200 }}
+                    <span *ngIf="movie.overview && movie.overview.length > 200">...</span>
+                  </p>
+                  
+                  <!-- Action Buttons -->
+                  <div class="hero-actions">
+                    <button class="btn btn-primary" (click)="viewMovieDetails(movie.id)">
+                      <i class="fa fa-info-circle"></i>
+                      More Details
+                    </button>
+                    <button class="btn btn-secondary" (click)="toggleWatchlist(movie)">
+                      <i class="fa" [class.fa-plus]="!isInWatchlist(movie.id)" 
+                         [class.fa-check]="isInWatchlist(movie.id)"></i>
+                      {{ isInWatchlist(movie.id) ? 'In Watchlist' : 'Add to Watchlist' }}
+                    </button>
+                    <button class="btn btn-secondary" (click)="shareMovie(movie)">
+                      <i class="fa fa-share"></i>
+                      Share
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-carousel>
+      
+      <!-- Custom Navigation -->
+      <div class="hero-navigation">
+        <button class="nav-btn nav-prev" (click)="previousSlide()">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+        <button class="nav-btn nav-next" (click)="nextSlide()">
+          <i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
+      
+      <!-- Slide Indicators -->
+      <div class="hero-indicators">
+        <button 
+          class="indicator-dot" 
+          *ngFor="let movie of moviesArr; let i = index; trackBy: trackByMovieId"
+          [class.active]="i === currentSlideIndex"
+          (click)="goToSlide(i)"
+          [attr.aria-label]="'Go to ' + movie.title">
+        </button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Sidebar Content -->
+  <aside class="sidebar">
+    <div class="sidebar-content">
+      
+      <!-- Quick Actions -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Quick Actions</h3>
+        <div class="quick-actions">
+          <div class="form-check form-switch">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              role="switch" 
+              id="autoplaySwitch"
+              [(ngModel)]="autoplayEnabled"
+              (change)="toggleAutoplay()">
+            <label class="form-check-label" for="autoplaySwitch">
+              Auto-play Trailers
+            </label>
+          </div>
+          
+          <div class="form-check form-switch">
+            <input 
+              class="form-check-input" 
+              type="checkbox" 
+              role="switch" 
+              id="notificationsSwitch"
+              [(ngModel)]="notificationsEnabled">
+            <label class="form-check-label" for="notificationsSwitch">
+              New Release Notifications
+            </label>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Currently Featured -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Currently Featured</h3>
+        <div class="featured-info" *ngIf="moviesArr && moviesArr[currentSlideIndex]">
+          <div class="featured-poster">
+            <img 
+              [src]="'https://image.tmdb.org/t/p/w154' + moviesArr[currentSlideIndex].poster_path" 
+              [alt]="moviesArr[currentSlideIndex].title"
+              loading="lazy"/>
+          </div>
+          <div class="featured-details">
+            <h4>{{ moviesArr[currentSlideIndex].title }}</h4>
+            <p class="featured-year">{{ moviesArr[currentSlideIndex].release_date | date:'yyyy' }}</p>
+            <div class="featured-rating">
+              <i class="fa fa-star"></i>
+              <span>{{ moviesArr[currentSlideIndex].vote_average }}/10</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Trending Topics -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Trending Now</h3>
+        <ul class="trending-list">
+          <li class="trending-item" *ngFor="let trend of trendingTopics; let i = index; trackBy: trackByTrendIndex">
+            <span class="trend-rank">{{ i + 1 }}</span>
+            <span class="trend-title">{{ trend.title }}</span>
+            <span class="trend-change" [class.trending-up]="trend.change > 0" 
+                  [class.trending-down]="trend.change < 0">
+              <i class="fa" [class.fa-arrow-up]="trend.change > 0" 
+                 [class.fa-arrow-down]="trend.change < 0"></i>
+            </span>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Quick Stats -->
+      <div class="sidebar-section">
+        <h3 class="sidebar-title">Your Stats</h3>
+        <div class="stats-grid">
+          <div class="stat-item">
+            <span class="stat-value">{{ userStats.watchedMovies || 0 }}</span>
+            <span class="stat-label">Movies Watched</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{{ userStats.watchlistCount || 0 }}</span>
+            <span class="stat-label">In Watchlist</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{{ userStats.reviewsCount || 0 }}</span>
+            <span class="stat-label">Reviews Written</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{{ userStats.ratingsGiven || 0 }}</span>
+            <span class="stat-label">Ratings Given</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
 
-				<div class="overlay-div"> <p>I m overlayed {{movie.id}}</p>
-			
-					<!--	<video width="320" height="240" controls>
-							<source src="getMovieVideo({{M.id}})" type="video/mp4">
-							<source src="getMovieVideo({{MOVIE.id}})" type="video/webm">
-							Your browser does not support the video tag.
-						  </video> -->
-				</div>
-			</ng-template>
-		</ngb-carousel>
-		
-	</div> 
-	<div class="child2"> 
-
-		<p> 
-			We provide a variety of services  
-			for you to learn, thrive and also  
-			have fun! Free Tutorials, Millions  
-			of Articles, Live, Online and  
-			Classroom Courses ,Frequent Coding  
-			Competitions, Webinars by Industry  
-			Experts, Internship opportunities  
-			and Job Opportunities.
-			aaa
-			a
-		</p>
-		<p> 
-			We provide a variety of services  
-			for you to learn, thrive and also  
-			have fun! Free Tutorials, Millions  
-			of Articles, Live, Online and  
-			Classroom Courses ,Frequent Coding  
-			Competitions, Webinars by Industry  
-			Experts, Internship opportunities  
-			and Job Opportunities.
-			aaa
-			a
-		</p>
-		<p> 
-			We provide a variety of services  
-			for you to learn, thrive and also  
-			have fun! Free Tutorials, Millions  
-			of Articles, Live, Online and  
-			Classroom Courses ,Frequent Coding  
-			Competitions, Webinars by Industry  
-			Experts, Internship opportunities  
-			and Job Opportunities.
-			aaa
-			a
-		</p>
-		<p> 
-			We provide a variety of services  
-			for you to learn, thrive and also  
-			have fun! Free Tutorials, Millions  
-			of Articles, Live, Online and  
-			Classroom Courses ,Frequent Coding  
-			Competitions, Webinars by Industry  
-			Experts, Internship opportunities  
-			and Job Opportunities.
-			aaa
-			a
-		</p>
-
-		<div class="form-check form-switch">
-			<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-			<label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
-		  </div>
-		 
-	</div> 
-</div> 
-<div class="Parent2">
-ID : {{this.active_movie_id}}
+<!-- Currently Active Movie Debug Info (can be removed in production) -->
+<div class="debug-info" *ngIf="showDebugInfo">
+  <p>Active Movie ID: {{ active_movie_id }}</p>
+  <p>Current Slide: {{ currentSlideIndex }}</p>
 </div>

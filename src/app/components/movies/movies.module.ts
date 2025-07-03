@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 //import { MovieDetailsRoutingModule } from './movie-details-routing.module';
 import { MoviesComponent } from './movies.component';
@@ -41,6 +42,8 @@ import { BrowserModule } from '@angular/platform-browser';
 
   */
   imports: [
+    CommonModule,
+    RouterModule,
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,
@@ -56,15 +59,8 @@ import { BrowserModule } from '@angular/platform-browser';
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
-    CommonModule,
     BrowserModule,
-
- //   MovieDetailsRoutingModule,
-//    PipeModule,
-//    MatTabsModule,
-      MatDialogModule,
- //   MatIconModule,
- //   CarouselModule
+    MatDialogModule,
   ],
 
 })

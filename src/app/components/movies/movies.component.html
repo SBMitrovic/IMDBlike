@@ -1,31 +1,82 @@
-<head>
-<link rel="stylesheet" href="/normalize.css" />
-</head>
+<!-- Movies Section -->
+<section class="movies-section">
+  <div class="movies-container">
+    <!-- Header -->
+    <div class="movies-header">
+      <h1 *ngIf="!isSearchMode">Popular Movies</h1>
+      <h1 *ngIf="isSearchMode">Search Results for "{{searchQuery}}"</h1>
+      <p class="subtitle" *ngIf="!isSearchMode">Discover the latest and greatest films</p>
+      <p class="subtitle" *ngIf="isSearchMode">Found {{totalResults}} results</p>
+    </div>
 
-<section class="filmes">
-  <div class="filmes-content">
-
-    <div class="cards"  *ngFor="let movie of moviesArr">
-      <figure>
-        <div class="container-img">
-          <img src="https://image.tmdb.org/t/p/w185{{movie.poster_path}}" alt="Moonlight" style="width:100%">
-
-          <div class="overlay">
-            <div class="text">
-              <span>{{movie.title}}</span>
-              <i class="fas fa-play"></i>
+    <!-- Movies Grid -->
+    <div class="movies-grid" *ngIf="moviesArr && moviesArr.length > 0 && !loader">
+      <div class="movie-card" *ngFor="let movie of moviesArr; trackBy: trackByMovieId" 
+           (click)="openMovieModal(movie)" 
+           (mouseenter)="onCardHover(movie)"
+           [attr.data-movie-id]="movie.id">
+        <div class="movie-card-image">
+          <img 
+            [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w342' + movie.poster_path : 'assets/placeholder-poster.jpg'" 
+            [alt]="movie.title"
+            loading="lazy">
+          
+          <div class="movie-overlay">
+            <div class="movie-overlay-content">
+              <span class="watch-now">See More</span>
+              <i class="fas fa-info-circle"></i>
             </div>
           </div>
         </div>
-        <figcaption>
-          <h4>{{movie.title}}</h4>
-          <h5>{{movie.genre_ids}}</h5>
-          <div class="opcoes">
-            <i class="fa fa-heart" aria-hidden="true"></i>
-            <span>{{movie.release_date}}</span>
-            <span>{{movie.vote_average}}</span>
+        
+        <div class="movie-card-content">
+          <h3 class="movie-title">{{movie.title}}</h3>
+          <div class="movie-meta">
+            <span class="release-year">{{movie.release_date | date:'yyyy'}}</span>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <span>{{movie.vote_average | number:'1.1-1'}}</span>
+            </div>
           </div>
-        </figcaption>
-      </figure>
+          <div class="movie-actions">
+            <button class="btn-favorite" type="button" aria-label="Add to favorites">
+              <i class="far fa-heart"></i>
+            </button>
+            <button class="btn-watchlist" type="button" aria-label="Add to watchlist">
+              <i class="far fa-bookmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
- 
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="loader">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <p>Loading movies...</p>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="moviesArr && moviesArr.length > 0 && !loader">
+      <button 
+        class="pagination-btn" 
+        type="button" 
+        (click)="goToPreviousPage()"
+        [disabled]="!canGoToPreviousPage">
+        <i class="fas fa-chevron-left"></i>
+        Previous
+      </button>
+      <span class="page-info">Page {{currentPage}} of {{totalPages}}</span>
+      <button 
+        class="pagination-btn" 
+        type="button" 
+        (click)="goToNextPage()"
+        [disabled]="!canGoToNextPage">
+        Next
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</section>

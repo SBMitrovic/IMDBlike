@@ -35,16 +35,16 @@ export class MoviesapiService {
 
  
 
-  searchMovies(searchStr: string): Observable<any> {
-    return this.httpClient.get(`${this.rootUrl}search/movie?query=${searchStr}`, {headers: this.bearerToken, });
+  searchMovies(searchStr: string, page: number = 1): Observable<any> {
+    return this.httpClient.get(`${this.rootUrl}search/movie?query=${searchStr}&page=${page}`, {headers: this.bearerToken, });
   }
 
   getMovie(id: string): Observable<any> {
     return this.httpClient.get(`${this.rootUrl}movie/${id}`, {headers : this.bearerToken});
   }
   
-  getMoviesByGenre(id: string | undefined): Observable<Movies> {
-    return this.httpClient.get<Movies>(`${this.rootUrl}genre/${id}/movies`, {headers : this.bearerToken});
+  getMoviesByGenre(id: string | undefined, page: number = 1): Observable<Movies> {
+    return this.httpClient.get<Movies>(`${this.rootUrl}discover/movie?with_genres=${id}&page=${page}`, {headers : this.bearerToken});
   }
 
  

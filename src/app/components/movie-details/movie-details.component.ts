@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Movie } from 'src/app/interfaces/movie';
 import { MoviesapiService } from 'src/app/services/moviesapi.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-movie-details',
@@ -14,6 +14,7 @@ export class MovieDetailsComponent implements OnInit{
   public id : any; 
   public video : any;
   movie : Movie | undefined;
+  isModalMode = false;
 
   baseUrl = 'https://www.youtube.com/embed/';
   autoplay = '?rel=0;&autoplay=1&mute=0';
@@ -25,19 +26,39 @@ export class MovieDetailsComponent implements OnInit{
   
 
   
-  constructor(private router : Router, private movieService : MoviesapiService, private route :ActivatedRoute,
-    private sanitizer: DomSanitizer, private dialog: MatDialog) {
-
-   }
+  constructor(
+    private router : Router, 
+    private movieService : MoviesapiService, 
+    private route :ActivatedRoute,
+    private sanitizer: DomSanitizer, 
+    private dialog: MatDialog,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
+    @Optional() public dialogRef: MatDialogRef<MovieDetailsComponent>
+  ) {}
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      this.id = params['id'];
+    // Check if opened as modal or route
+    if (this.data && this.data.movieId) {
+      // Modal mode
+      this.isModalMode = true;
+      this.id = this.data.movieId;
+      this.movie = this.data.movie; // Use the passed movie data initially
       this.getSingleMovieDetails(this.id);
-//      this.getSingleMovieVideos(this.id);
-//      this.getCast(this.id);
-//      this.getBackropsImages(this.id);
-//      this.getRecomendMovie(this.id);
-    })
+      this.getSingleMovieVideos(this.id);
+      this.getCast(this.id);
+      this.getBackropsImages(this.id);
+      this.getRecomendMovie(this.id);
+    } else {
+      // Route mode
+      this.isModalMode = false;
+      this.route.params.subscribe(params => {
+        this.id = params['id'];
+        this.getSingleMovieDetails(this.id);
+        this.getSingleMovieVideos(this.id);
+        this.getCast(this.id);
+        this.getBackropsImages(this.id);
+        this.getRecomendMovie(this.id);
+      });
+    }
   }
   
   

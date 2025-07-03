@@ -1,7 +1,7 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { CustomValidators } from 'src/app/components/registration/custom-validator';
-import { AuthService } from 'src/app/services/auth.service';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { RegisterRequest } from 'src/app/interfaces/reglogin';
@@ -27,23 +27,29 @@ export class RegisterComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: FirebaseAuthService
   ) { }
 
-  register() {    if (!this.registerForm.valid) {
+  async register() {
+    if (!this.registerForm.valid) {
       return;
     }
-    const RegisterRequest = {
-      email: this.registerForm.value.email,
-      username: this.registerForm.value.username,
-      firstname: this.registerForm.value.firstname,
-      lastname: this.registerForm.value.lastname,
-      password: this.registerForm.value.password
+    
+    try {
+      const formValues = this.registerForm.value;
+      const displayName = `${formValues.firstname} ${formValues.lastname}`;
+      
+      await this.authService.signUpWithEmail(
+        formValues.email!,
+        formValues.password!,
+        displayName
+      );
+      
+      // Navigation is handled in the auth service
+    } catch (error) {
+      console.error('Registration error:', error);
+      // Error handling is done in the auth service
     }
-    this.authService.register(RegisterRequest).pipe(
-      // If registration was successfull, then navigate to login route
-      tap(() => this.router.navigate(['../login']))
-    ).subscribe();
   }
 
 }

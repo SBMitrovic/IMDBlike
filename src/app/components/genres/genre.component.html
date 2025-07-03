@@ -1,12 +1,82 @@
 
+<!-- Genre Movies Section -->
+<section class="movies-section">
+  <div class="movies-container">
+    <!-- Header -->
+    <div class="movies-header">
+      <h1>{{getGenreName()}} Movies</h1>
+      <p class="subtitle">Explore the best {{getGenreName()}} films</p>
+    </div>
 
-<div *ngFor="let movie of moviesArr">
-  <div>
-      <h5>Name : {{movie?.title}}, ID: {{movie?.id}}</h5>
-      <img height="150" width="150" src="https://image.tmdb.org/t/p/w185{{movie?.poster_path}}">
+  
+    <!-- Movies Grid -->
+    <div class="movies-grid" *ngIf="moviesArr && moviesArr.length > 0 && !loader">
+      <div class="movie-card" *ngFor="let movie of moviesArr" (click)="openMovieModal(movie)">
+        <div class="movie-card-image">
+          <img 
+            [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w342' + movie.poster_path : 'assets/placeholder-poster.jpg'" 
+            [alt]="movie.title"
+            loading="lazy">
+          
+          <div class="movie-overlay">
+            <div class="movie-overlay-content">
+              <span class="watch-now">See More</span>
+              <i class="fas fa-info-circle"></i>
+            </div>
+          </div>
+        </div>
+        
+        <div class="movie-card-content">
+          <h3 class="movie-title">{{movie.title}}</h3>
+          <div class="movie-meta">
+            <span class="release-year">{{movie.release_date | date:'yyyy'}}</span>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <span>{{movie.vote_average | number:'1.1-1'}}</span>
+            </div>
+          </div>
+          <div class="movie-actions">
+            <button class="btn-favorite" type="button" aria-label="Add to favorites">
+              <i class="far fa-heart"></i>
+            </button>
+            <button class="btn-watchlist" type="button" aria-label="Add to watchlist">
+              <i class="far fa-bookmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="loader">
+      <div class="loading-spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </div>
+      <p>Loading {{getGenreName()}} movies...</p>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" *ngIf="moviesArr && moviesArr.length > 0 && !loader">
+      <button 
+        class="pagination-btn" 
+        type="button" 
+        (click)="goToPreviousPage()"
+        [disabled]="!canGoToPreviousPage">
+        <i class="fas fa-chevron-left"></i>
+        Previous
+      </button>
+      <span class="page-info">Page {{currentPage}} of {{totalPages}}</span>
+      <button 
+        class="pagination-btn" 
+        type="button" 
+        (click)="goToNextPage()"
+        [disabled]="!canGoToNextPage">
+        Next
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
   </div>
-  AAAAA
-</div> 
+</section> 
 
 
 

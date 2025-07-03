@@ -1,33 +1,173 @@
-<div>
-  <a [routerLink]="['../register']">Go to Register</a>
-  <mat-card>
-    <mat-card-title>Login</mat-card-title>
-    <mat-card-content>
-      <form [formGroup]="loginForm" (ngSubmit)="login()">
+<!-- Modern Login Page -->
+<div class="login-container">
+  <div class="login-wrapper">
+    
+    <!-- Header Section -->
+    <div class="login-header">
+      <div class="brand-logo">
+        <i class="fas fa-film"></i>
+        <h1>MovieDB</h1>
+      </div>
+      <p class="welcome-text">Welcome back! Please sign in to your account</p>
+    </div>
 
-        <mat-form-field>
-          <input type="email" matInput placeholder="Email" formControlName="email">
-          <!-- Here we can display error messages/hints for the user, if one of the Validators adds an error to the email 
-           with the .touched check we only display the hints if the input was touched by the users -->
-          <mat-error *ngIf="this.loginForm.get('email')?.touched && this.loginForm.get('email')?.hasError('required')">
-            Email is required</mat-error>
-          <mat-error *ngIf="this.loginForm.get('email')?.touched && this.loginForm.get('email')?.hasError('email')">
-            Email must be a valid Email</mat-error>
-        </mat-form-field>
-
-        <mat-form-field>
-          <input type="password" matInput placeholder="Password" formControlName="password">
-          <mat-error
-            *ngIf="this.loginForm.get('password')?.touched && this.loginForm.get('password')?.hasError('required')">
-            Password is required</mat-error>
-        </mat-form-field>
-
-        <div class="button">
-          <!-- Button is disabled(not clickable), if our LoginForm contains Validation Errors -->
-          <button type="submit" mat-button [disabled]="!loginForm.valid">Login</button>
+    <!-- Login Form -->
+    <div class="login-form-container">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form" *ngIf="!showResetPassword">
+        
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope input-icon"></i>
+            <input 
+              id="email"
+              type="email" 
+              class="form-control"
+              [class.error]="hasError('email')"
+              formControlName="email"
+              placeholder="Enter your email"
+              autocomplete="email">
+          </div>
+          <div class="error-message" *ngIf="hasError('email')">
+            {{ getErrorMessage('email') }}
+          </div>
         </div>
 
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock input-icon"></i>
+            <input 
+              id="password"
+              [type]="hidePassword ? 'password' : 'text'"
+              class="form-control"
+              [class.error]="hasError('password')"
+              formControlName="password"
+              placeholder="Enter your password"
+              autocomplete="current-password">
+            <button 
+              type="button" 
+              class="password-toggle"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'">
+              <i [class]="hidePassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+            </button>
+          </div>
+          <div class="error-message" *ngIf="hasError('password')">
+            {{ getErrorMessage('password') }}
+          </div>
+        </div>
+
+        <!-- Remember Me & Forgot Password -->
+        <div class="form-options">
+          <label class="checkbox-wrapper">
+            <input type="checkbox" formControlName="rememberMe">
+            <span class="checkmark"></span>
+            <span class="checkbox-label">Remember me</span>
+          </label>
+          
+          <button type="button" class="link-button" (click)="toggleResetPassword()">
+            Forgot password?
+          </button>
+        </div>
+
+        <!-- Login Button -->
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-login"
+          [disabled]="!loginForm.valid || isLoading">
+          <span *ngIf="!isLoading">Sign In</span>
+          <span *ngIf="isLoading" class="loading-content">
+            <i class="fas fa-spinner fa-spin"></i>
+            Signing in...
+          </span>
+        </button>
+
+        <!-- Divider -->
+        <div class="divider">
+          <span>or</span>
+        </div>
+
+        <!-- Google Sign In -->
+        <button 
+          type="button" 
+          class="btn btn-google"
+          (click)="onGoogleSignIn()"
+          [disabled]="isLoading">
+          <i class="fab fa-google"></i>
+          Continue with Google
+        </button>
+
+        <!-- Sign Up Link -->
+        <div class="signup-link">
+          <span>Don't have an account?</span>
+          <button type="button" class="link-button primary" (click)="goToRegister()">
+            Sign up
+          </button>
+        </div>
       </form>
-    </mat-card-content>
-  </mat-card>
+
+      <!-- Password Reset Form -->
+      <form [formGroup]="resetEmailForm" (ngSubmit)="onResetPassword()" class="reset-form" *ngIf="showResetPassword">
+        
+        <div class="reset-header">
+          <button type="button" class="back-button" (click)="toggleResetPassword()">
+            <i class="fas fa-arrow-left"></i>
+          </button>
+          <h2>Reset Password</h2>
+          <p>Enter your email address and we'll send you a link to reset your password</p>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="resetEmail" class="form-label">Email Address</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope input-icon"></i>
+            <input 
+              id="resetEmail"
+              type="email" 
+              class="form-control"
+              [class.error]="hasError('email', resetEmailForm)"
+              formControlName="email"
+              placeholder="Enter your email"
+              autocomplete="email">
+          </div>
+          <div class="error-message" *ngIf="hasError('email', resetEmailForm)">
+            {{ getErrorMessage('email', resetEmailForm) }}
+          </div>
+        </div>
+
+        <!-- Reset Button -->
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-reset"
+          [disabled]="!resetEmailForm.valid || isLoading">
+          <span *ngIf="!isLoading">Send Reset Link</span>
+          <span *ngIf="isLoading" class="loading-content">
+            <i class="fas fa-spinner fa-spin"></i>
+            Sending...
+          </span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Background Elements -->
+  <div class="background-pattern"></div>
+  <div class="floating-elements">
+    <div class="floating-element" style="--delay: 0s; --x: 10%; --y: 20%;">
+      <i class="fas fa-film"></i>
+    </div>
+    <div class="floating-element" style="--delay: 2s; --x: 85%; --y: 10%;">
+      <i class="fas fa-video"></i>
+    </div>
+    <div class="floating-element" style="--delay: 4s; --x: 15%; --y: 80%;">
+      <i class="fas fa-star"></i>
+    </div>
+    <div class="floating-element" style="--delay: 6s; --x: 80%; --y: 75%;">
+      <i class="fas fa-play"></i>
+    </div>
+  </div>
 </div>
