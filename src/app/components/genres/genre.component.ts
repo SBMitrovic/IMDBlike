@@ -7,6 +7,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog } from '@angular/material/dialog';
 import { MovieDetailsComponent } from '../movie-details/movie-details.component';
+import { UserListsService } from 'src/app/services/user-lists.service';
 
 @Component({
   selector: 'app-genre',
@@ -31,7 +32,8 @@ export class GenreComponent implements OnInit {
     private router: ActivatedRoute,
     private sanitizer: DomSanitizer, 
     private route: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private userListsService: UserListsService
   ) {
     genresService.getAllGenres().subscribe(res => this.genresArr = res.genres);
   }
@@ -166,5 +168,24 @@ export class GenreComponent implements OnInit {
         // This ensures the component is properly refreshed
       }, 100);
     });
+  }
+
+  // User lists functionality
+  isInFavorites(movieId: number): boolean {
+    return this.userListsService.isInFavorites(movieId);
+  }
+
+  isInWatchLater(movieId: number): boolean {
+    return this.userListsService.isInWatchLater(movieId);
+  }
+
+  toggleFavorite(movie: Movie, event: Event): void {
+    event.stopPropagation();
+    this.userListsService.toggleFavorite(movie);
+  }
+
+  toggleWatchLater(movie: Movie, event: Event): void {
+    event.stopPropagation();
+    this.userListsService.toggleWatchLater(movie);
   }
 }

@@ -4,6 +4,7 @@ import { Movie } from 'src/app/interfaces/movie';
 import { MoviesapiService } from 'src/app/services/moviesapi.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserListsService } from 'src/app/services/user-lists.service';
 
 @Component({
   selector: 'app-movie-details',
@@ -32,6 +33,7 @@ export class MovieDetailsComponent implements OnInit{
     private route :ActivatedRoute,
     private sanitizer: DomSanitizer, 
     private dialog: MatDialog,
+    private userListsService: UserListsService,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     @Optional() public dialogRef: MatDialogRef<MovieDetailsComponent>
   ) {}
@@ -104,5 +106,24 @@ export class MovieDetailsComponent implements OnInit{
     this.movieService.getRecomendMovies(id).subscribe((res: any) => {
       this.recomendMovies = res.results;
     });
+  }
+
+  // User lists functionality
+  isInFavorites(movieId: number): boolean {
+    return this.userListsService.isInFavorites(movieId);
+  }
+
+  isInWatchLater(movieId: number): boolean {
+    return this.userListsService.isInWatchLater(movieId);
+  }
+
+  toggleFavorite(movie: Movie, event: Event): void {
+    event.stopPropagation();
+    this.userListsService.toggleFavorite(movie);
+  }
+
+  toggleWatchLater(movie: Movie, event: Event): void {
+    event.stopPropagation();
+    this.userListsService.toggleWatchLater(movie);
   }
 }

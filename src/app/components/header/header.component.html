@@ -6,11 +6,14 @@
 
       <div class="links">
         <a routerLink="/home" routerLinkActive="active">Home</a>
+        <a routerLink="/movies" routerLinkActive="active">Movies</a>
         
         <!-- Show different links based on authentication status -->
         <ng-container *ngIf="currentUser; else notLoggedIn">
           <!-- User is logged in -->
-          <span class="user-info">Welcome, {{currentUser.displayName || currentUser.email}}</span>
+          <a routerLink="/favourites" routerLinkActive="active">Favorites</a>
+          <a routerLink="/watch-later" routerLinkActive="active">Watchlist</a>
+          <!-- <span class="user-info">Welcome, {{currentUser.displayName || currentUser.email}}</span> -->
           <a (click)="logout()" style="cursor: pointer;" class="logout-btn">Logout</a>
         </ng-container>
         
@@ -19,8 +22,6 @@
           <a routerLink="/login" routerLinkActive="active">Login</a>
           <a routerLink="/register" routerLinkActive="active">Register</a>
         </ng-template>
-        
-        <a routerLink="/movies" routerLinkActive="active">Top rated movies</a>
       </div>  
       
       <div class="search">

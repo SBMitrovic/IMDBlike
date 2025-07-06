@@ -1,0 +1,98 @@
+/* Import the same styles as movies component */
+@import '../movies/movies.component.css';
+
+/* Specific styles for favorites */
+.btn-favorite.active {
+  background: rgba(220, 53, 69, 0.2) !important;
+  color: #dc3545 !important;
+  border-color: rgba(220, 53, 69, 0.3) !important;
+}
+
+.btn-favorite.active:hover {
+  background: rgba(220, 53, 69, 0.3) !important;
+}
+
+.btn-watchlist.active {
+  background: rgba(228, 187, 35, 0.2) !important;
+  color: #e4bb23 !important;
+  border-color: rgba(228, 187, 35, 0.3) !important;
+}
+
+.btn-watchlist.active:hover {
+  background: rgba(228, 187, 35, 0.3) !important;
+}
+
+/* Empty state styles */
+.empty-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 2rem;
+}
+
+.empty-content {
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.empty-content i {
+  font-size: 4rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  opacity: 0.7;
+}
+
+.empty-content h3 {
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 1.5rem;
+}
+
+.empty-content p {
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+.empty-content .btn {
+  padding: 0.75rem 2rem;
+  font-size: 1rem;
+  text-decoration: none;
+  border-radius: 8px;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.empty-content .btn.btn-primary {
+  background: linear-gradient(135deg, #e4bb23, #f0c927);
+  color: var(--secondary-color);
+  border: none;
+}
+
+.empty-content .btn.btn-primary:hover {
+  background: linear-gradient(135deg, #f0c927, #e4bb23);
+  transform: translateY(-2px);
+}
+
+/* Loading state */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  text-align: center;
+}
+
+.loading-spinner i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.loading-spinner p {
+  font-size: 1rem;
+}

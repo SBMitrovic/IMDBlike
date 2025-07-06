@@ -36,11 +36,21 @@
             </div>
           </div>
           <div class="movie-actions">
-            <button class="btn-favorite" type="button" aria-label="Add to favorites">
-              <i class="far fa-heart"></i>
+            <button 
+              class="btn-favorite" 
+              type="button" 
+              aria-label="Add to favorites"
+              [class.active]="isInFavorites(movie.id)"
+              (click)="toggleFavorite(movie, $event)">
+              <i [class]="isInFavorites(movie.id) ? 'fas fa-heart' : 'far fa-heart'"></i>
             </button>
-            <button class="btn-watchlist" type="button" aria-label="Add to watchlist">
-              <i class="far fa-bookmark"></i>
+            <button 
+              class="btn-watchlist" 
+              type="button" 
+              aria-label="Add to watchlist"
+              [class.active]="isInWatchLater(movie.id)"
+              (click)="toggleWatchLater(movie, $event)">
+              <i [class]="isInWatchLater(movie.id) ? 'fas fa-bookmark' : 'far fa-bookmark'"></i>
             </button>
           </div>
         </div>

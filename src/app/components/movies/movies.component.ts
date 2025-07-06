@@ -9,6 +9,7 @@ import { Genre } from 'src/app/interfaces/genre';
 import { Movie } from 'src/app/interfaces/movie';
 import { FormControl } from '@angular/forms';
 import { MovieDetailsComponent } from '../movie-details/movie-details.component';
+import { UserListsService } from '../../services/user-lists.service';
 
 
 @Component({
@@ -42,7 +43,8 @@ export class MoviesComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private userListsService: UserListsService
   ) {}
     
   ngOnInit(){
@@ -190,6 +192,25 @@ export class MoviesComponent implements OnInit, OnDestroy {
 
   onCardHover(movie: Movie): void {
     console.log('Card hover detected for:', movie.title);
+  }
+
+  // User lists functionality
+  isInFavorites(movieId: number): boolean {
+    return this.userListsService.isInFavorites(movieId);
+  }
+
+  isInWatchLater(movieId: number): boolean {
+    return this.userListsService.isInWatchLater(movieId);
+  }
+
+  toggleFavorite(movie: Movie, event: Event): void {
+    event.stopPropagation();
+    this.userListsService.toggleFavorite(movie);
+  }
+
+  toggleWatchLater(movie: Movie, event: Event): void {
+    event.stopPropagation();
+    this.userListsService.toggleWatchLater(movie);
   }
 
 }

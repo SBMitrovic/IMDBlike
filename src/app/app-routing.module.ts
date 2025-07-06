@@ -10,6 +10,9 @@ import { PersonComponent } from './components/person/person.component';
 import { LoginComponent } from 'src/app/components/registration/login/login.component';
 import { RegisterComponent } from 'src/app/components/registration/register/register.component';
 import { PeopleComponent } from './components/people/people.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
+import { WatchLaterComponent } from './components/watch-later/watch-later.component';
+import { FirebaseAuthGuard } from './guards/firebase-auth.guard';
 
 
 const routes: Routes = [
@@ -60,6 +63,16 @@ const routes: Routes = [
   {
     path : 'people',
     component: PeopleComponent
+  },
+  {
+    path: 'favourites',
+    component: FavoritesComponent,
+    canActivate: [FirebaseAuthGuard]
+  },
+  {
+    path: 'watch-later',
+    component: WatchLaterComponent,
+    canActivate: [FirebaseAuthGuard]
   },
   {
     path : '**',

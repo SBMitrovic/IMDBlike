@@ -1,25 +1,141 @@
-<h3 *ngIf="message">{{message}}</h3>
-<div class="form-group">
-  <form (ngSubmit)="register()">
-    <div class="user-name">
-      <input type="text"
-             placeholder="Username"
-             required
-             name="username"
-             #usernameField="ngModel"
-             [(ngModel)]="username">
-      <div *ngIf="usernameField.errors?.['required']">Username is Mandatory</div>
+<!-- Modern Register Page -->
+<div class="register-container">
+  <div class="register-wrapper">
+    
+    <!-- Header Section -->
+    <div class="register-header">
+      <div class="brand-logo">
+        <i class="fas fa-film"></i>
+        <h1>MovieDB</h1>
+      </div>
+      <p class="welcome-text">Join the ultimate movie experience! Create your account</p>
     </div>
-    <div class="password">
-      <input type="password"
-             placeholder="Password"
-             required
-             name="password"
-             #passwordField="ngModel"
-             [(ngModel)]="password">
-      <div *ngIf="passwordField.errors?.['required']">Password is Mandatory</div>
-    </div>
-    <button type="submit">Register</button>
-  </form>
 
+    <!-- Register Form -->
+    <div class="register-form-container">
+      <form (ngSubmit)="register()" class="register-form">
+        
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email Address</label>
+          <div class="input-wrapper">
+            <i class="fas fa-envelope input-icon"></i>
+            <input 
+              id="email"
+              type="email" 
+              class="form-control"
+              [class.error]="emailField.errors && emailField.touched"
+              name="email"
+              #emailField="ngModel"
+              [(ngModel)]="email"
+              placeholder="Enter your email address"
+              required
+              email
+              autocomplete="email">
+          </div>
+          <div class="error-message" *ngIf="emailField.errors?.['required'] && emailField.touched">
+            Email address is required
+          </div>
+          <div class="error-message" *ngIf="emailField.errors?.['email'] && emailField.touched">
+            Please enter a valid email address
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <div class="input-wrapper">
+            <i class="fas fa-lock input-icon"></i>
+            <input 
+              id="password"
+              [type]="hidePassword ? 'password' : 'text'"
+              class="form-control"
+              [class.error]="passwordField.errors?.['required'] && passwordField.touched"
+              name="password"
+              #passwordField="ngModel"
+              [(ngModel)]="password"
+              placeholder="Enter your password"
+              required
+              autocomplete="new-password">
+            <button 
+              type="button" 
+              class="password-toggle"
+              (click)="togglePasswordVisibility()"
+              [attr.aria-label]="hidePassword ? 'Show password' : 'Hide password'">
+              <i [class]="hidePassword ? 'fas fa-eye' : 'fas fa-eye-slash'"></i>
+            </button>
+          </div>
+          <div class="error-message" *ngIf="passwordField.errors?.['required'] && passwordField.touched">
+            Password is required
+          </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div class="form-options">
+          <label class="checkbox-wrapper">
+            <input type="checkbox" name="acceptTerms" #termsField="ngModel" [(ngModel)]="acceptTerms" required>
+            <span class="checkmark"></span>
+            <span class="checkbox-label">I agree to the <a href="#" class="link-button">Terms of Service</a> and <a href="#" class="link-button">Privacy Policy</a></span>
+          </label>
+        </div>
+
+        <!-- Error Message -->
+        <div class="error-message" *ngIf="message" [class.success]="message.includes('successful')">
+          {{ message }}
+        </div>
+
+        <!-- Register Button -->
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-register"
+          [disabled]="!emailField.valid || !passwordField.valid || !acceptTerms || isLoading">
+          <span *ngIf="!isLoading">Create Account</span>
+          <span *ngIf="isLoading" class="loading-content">
+            <i class="fas fa-spinner fa-spin"></i>
+            Creating account...
+          </span>
+        </button>
+
+        <!-- Divider -->
+        <div class="divider">
+          <span>or</span>
+        </div>
+
+        <!-- Google Sign Up -->
+        <button 
+          type="button" 
+          class="btn btn-google"
+          (click)="onGoogleSignUp()"
+          [disabled]="isLoading">
+          <i class="fab fa-google"></i>
+          Sign up with Google
+        </button>
+
+        <!-- Sign In Link -->
+        <div class="signin-link">
+          <span>Already have an account?</span>
+          <button type="button" class="link-button primary" (click)="goToLogin()">
+            Sign in
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Background Elements -->
+  <div class="background-pattern"></div>
+  <div class="floating-elements">
+    <div class="floating-element" style="--delay: 0s; --x: 10%; --y: 20%;">
+      <i class="fas fa-film"></i>
+    </div>
+    <div class="floating-element" style="--delay: 2s; --x: 85%; --y: 10%;">
+      <i class="fas fa-video"></i>
+    </div>
+    <div class="floating-element" style="--delay: 4s; --x: 15%; --y: 80%;">
+      <i class="fas fa-star"></i>
+    </div>
+    <div class="floating-element" style="--delay: 6s; --x: 80%; --y: 75%;">
+      <i class="fas fa-play"></i>
+    </div>
+  </div>
 </div>

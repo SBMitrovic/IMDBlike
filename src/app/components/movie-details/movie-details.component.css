@@ -211,6 +211,16 @@
   color: #e4bb23;
 }
 
+.btn-secondary.active {
+  background: rgba(228, 187, 35, 0.3);
+  border-color: #e4bb23;
+  color: #e4bb23;
+}
+
+.btn-secondary.active:hover {
+  background: rgba(228, 187, 35, 0.4);
+}
+
 /* Content Sections */
 .movie-content {
   padding: 2rem;

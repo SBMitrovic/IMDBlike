@@ -8,6 +8,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { UserListsService } from 'src/app/services/user-lists.service';
 
 @Component({
   selector: 'app-header',
@@ -31,8 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
   constructor(private genreService: GenresService, private moviesService: MoviesapiService,private router : ActivatedRoute,
-    private route : Router, private sanitizer : DomSanitizer, private renderer: Renderer2, private authService: FirebaseAuthService, private dialog: MatDialog) {
-      this.genreComponent = new GenreComponent(this.genreService, this.moviesService, this.router, this.sanitizer, this.route, this.dialog);
+    private route : Router, private sanitizer : DomSanitizer, private renderer: Renderer2, private authService: FirebaseAuthService, private dialog: MatDialog, private userListsService: UserListsService) {
+      this.genreComponent = new GenreComponent(this.genreService, this.moviesService, this.router, this.sanitizer, this.route, this.dialog, this.userListsService);
     }
 
   ngOnInit() {

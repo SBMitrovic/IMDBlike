@@ -19,6 +19,8 @@ import { PersonComponent } from './components/person/person.component';
 import { ProfileComponent } from './components/registration/profile/profile.component';
 import { LoginComponent } from './components/registration/login/login.component';
 import { RegisterComponent } from './components/registration/register/register.component';
+import { FavoritesComponent } from './components/favorites/favorites.component';
+import { WatchLaterComponent } from './components/watch-later/watch-later.component';
 
 // Firebase imports
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
@@ -72,6 +74,8 @@ import{MovieDetailsModule} from './components/movies/movies.module';
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    FavoritesComponent,
+    WatchLaterComponent,
   ],
   imports: [
     CommonModule,

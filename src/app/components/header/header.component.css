@@ -21,7 +21,7 @@
   min-height: 60px;
   width: 100% !important;
   max-width: none !important;
-  padding: 0 var(--spacing-lg);
+  padding: 0 var(--spacing-md); /* Reduced from var(--spacing-lg) */
   margin: 0 !important;
   background-color: var(--background-dark);
   border-bottom: 2px solid var(--primary-color);
@@ -61,8 +61,10 @@
   flex: 1 1 auto;
   display: flex;
   justify-content: flex-start;
-  gap: var(--spacing-lg);
-  margin-left: var(--spacing-xl);
+  gap: var(--spacing-md); /* Reduced from var(--spacing-lg) */
+  margin-left: var(--spacing-lg);
+  flex-wrap: nowrap; /* Prevent wrapping */
+  overflow: hidden; /* Hide overflow if needed */
 }
 
 .links a {
@@ -71,9 +73,11 @@
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   text-transform: uppercase;
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-sm); /* Reduced horizontal padding */
   border-radius: var(--border-radius-sm);
   transition: color var(--transition-base);
+  white-space: nowrap; /* Prevent text wrapping */
+  flex-shrink: 0; /* Prevent shrinking */
 }
 
 .links a:hover,
@@ -86,8 +90,8 @@
 /* Search Section */
 .search {
   flex: 1 1 auto;
-  max-width: 300px;
-  margin: 0 var(--spacing-lg);
+  max-width: 250px; /* Reduced from 300px */
+  margin: 0 var(--spacing-md); /* Reduced from var(--spacing-lg) */
 }
 
 .search input {
@@ -220,6 +224,23 @@
 .links a:hover {
   color: var(--primary-color, #e4bb23);
   transform: translateY(-2px);
+}
+
+/* Desktop and larger screens - ensure no wrapping */
+@media (min-width: 769px) {
+  .links {
+    flex-wrap: nowrap !important;
+    overflow: hidden;
+  }
+  
+  .links a {
+    font-size: var(--font-size-xs, 0.8rem);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+  
+  .container {
+    gap: var(--spacing-sm);
+  }
 }
 
 /* Responsive Design */

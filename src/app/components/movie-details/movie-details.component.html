@@ -4,7 +4,7 @@
   <!-- Modal Header (only show in modal mode) -->
   <div class="modal-header" *ngIf="isModalMode">
     <h2 class="modal-title">Movie Details</h2>
-    <button mat-icon-button class="close-btn" (click)="dialogRef?.close()">
+    <button mat-icon-button class="close-btn" (click)="dialogRef.close()">
       <i class="fas fa-times"></i>
     </button>
   </div>
@@ -56,12 +56,18 @@
               <i class="fas fa-play"></i>
               Watch Trailer
             </button>
-            <button class="btn btn-secondary">
-              <i class="far fa-heart"></i>
+            <button 
+              class="btn btn-secondary" 
+              [class.active]="isInFavorites(movie.id)"
+              (click)="toggleFavorite(movie, $event)">
+              <i [class]="isInFavorites(movie.id) ? 'fas fa-heart' : 'far fa-heart'"></i>
               Add to Favorites
             </button>
-            <button class="btn btn-secondary">
-              <i class="far fa-bookmark"></i>
+            <button 
+              class="btn btn-secondary" 
+              [class.active]="isInWatchLater(movie.id)"
+              (click)="toggleWatchLater(movie, $event)">
+              <i [class]="isInWatchLater(movie.id) ? 'fas fa-bookmark' : 'far fa-bookmark'"></i>
               Watchlist
             </button>
           </div>
