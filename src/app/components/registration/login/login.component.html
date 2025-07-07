@@ -1,9 +1,9 @@
 <!-- Modern Login Page -->
-<div class="login-container">
-  <div class="login-wrapper">
+<div class="auth-container">
+  <div class="auth-wrapper">
     
     <!-- Header Section -->
-    <div class="login-header">
+    <div class="auth-header">
       <div class="brand-logo">
         <i class="fas fa-film"></i>
         <h1>MovieDB</h1>
@@ -12,8 +12,8 @@
     </div>
 
     <!-- Login Form -->
-    <div class="login-form-container">
-      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="login-form" *ngIf="!showResetPassword">
+    <div class="auth-form-container">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()" class="auth-form" *ngIf="!showResetPassword">
         
         <!-- Email Field -->
         <div class="form-group">
