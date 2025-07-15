@@ -5,6 +5,8 @@ import { MoviesapiService } from 'src/app/services/moviesapi.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { UserListsService } from 'src/app/services/user-lists.service';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-movie-details',
@@ -34,10 +36,15 @@ export class MovieDetailsComponent implements OnInit{
     private sanitizer: DomSanitizer, 
     private dialog: MatDialog,
     private userListsService: UserListsService,
+    private authService: FirebaseAuthService,
+    private snackBar: MatSnackBar,
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any,
     @Optional() public dialogRef: MatDialogRef<MovieDetailsComponent>
   ) {}
   ngOnInit(): void {
+    // Scroll to top when component initializes
+    window.scrollTo(0, 0);
+    
     // Check if opened as modal or route
     if (this.data && this.data.movieId) {
       // Modal mode
@@ -54,6 +61,8 @@ export class MovieDetailsComponent implements OnInit{
       this.isModalMode = false;
       this.route.params.subscribe(params => {
         this.id = params['id'];
+        // Scroll to top when route params change (navigating between different movies)
+        window.scrollTo(0, 0);
         this.getSingleMovieDetails(this.id);
         this.getSingleMovieVideos(this.id);
         this.getCast(this.id);
@@ -80,14 +89,11 @@ export class MovieDetailsComponent implements OnInit{
   }
 
   openDialogMovie(video : any): void {
-    this.video['url'] = this.sanitizer.bypassSecurityTrustResourceUrl(this.baseUrl + video.key + this.autoplay); 
-    /*
-    this.dialog.open(AppMovieDialogComponent, {
-      height: '600px',
-      width: '900px',
-      data: { video: this.video}
-    });
-    */
+    if (video && video.key) {
+      // Open YouTube video in a new tab
+      const youtubeUrl = `https://www.youtube.com/watch?v=${video.key}`;
+      window.open(youtubeUrl, '_blank');
+    }
   }
   
   getCast(id : any) {
@@ -108,6 +114,27 @@ export class MovieDetailsComponent implements OnInit{
     });
   }
 
+  openMovieModal(movie: any): void {
+    if (this.isModalMode) {
+      // If we're in modal mode, close current modal and navigate to movie details page
+      this.dialogRef?.close();
+      this.router.navigate(['/movies', movie.id]).then(() => {
+        window.scrollTo(0, 0);
+      });
+    } else {
+      // If we're on the page, just navigate to the new movie
+      this.router.navigate(['/movies', movie.id]).then(() => {
+        window.scrollTo(0, 0);
+      });
+    }
+  }
+
+  openPersonDetails(personId: number): void {
+    this.router.navigate(['/person', personId]).then(() => {
+      window.scrollTo(0, 0);
+    });
+  }
+
   // User lists functionality
   isInFavorites(movieId: number): boolean {
     return this.userListsService.isInFavorites(movieId);
@@ -119,11 +146,37 @@ export class MovieDetailsComponent implements OnInit{
 
   toggleFavorite(movie: Movie, event: Event): void {
     event.stopPropagation();
+    
+    if (!this.authService.isAuthenticated()) {
+      this.showLoginRequiredMessage('favorites');
+      return;
+    }
+    
     this.userListsService.toggleFavorite(movie);
   }
 
   toggleWatchLater(movie: Movie, event: Event): void {
     event.stopPropagation();
+    
+    if (!this.authService.isAuthenticated()) {
+      this.showLoginRequiredMessage('watchlist');
+      return;
+    }
+    
     this.userListsService.toggleWatchLater(movie);
+  }
+
+  private showLoginRequiredMessage(feature: string): void {
+    const message = `Please log in to add movies to your ${feature} ✨`;
+    const snackBarRef = this.snackBar.open(message, 'Login Now', {
+      duration: 5000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+      panelClass: 'login-required-snackbar'
+    });
+
+    snackBarRef.onAction().subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 }

@@ -122,7 +122,7 @@
     <section class="content-section" *ngIf="casts && casts.length > 0">
       <h3 class="section-title">Cast</h3>
       <div class="cast-grid">
-        <div class="cast-card" *ngFor="let cast of casts.slice(0, 8)">
+        <div class="cast-card" *ngFor="let cast of casts.slice(0, 8)" (click)="openPersonDetails(cast.id)">
           <div class="cast-image">
             <img [src]="cast.profile_path ? 'https://image.tmdb.org/t/p/w185' + cast.profile_path : 'assets/placeholder-person.jpg'" 
                  [alt]="cast.name" loading="lazy">
@@ -170,7 +170,7 @@
     <section class="content-section" *ngIf="recomendMovies && recomendMovies.length > 0">
       <h3 class="section-title">You May Also Like</h3>
       <div class="recommendations-grid">
-        <div class="recommendation-card" *ngFor="let rec of recomendMovies.slice(0, 6)">
+        <div class="recommendation-card" *ngFor="let rec of recomendMovies.slice(0, 6)" (click)="openMovieModal(rec)">
           <div class="rec-image">
             <img [src]="rec.poster_path ? 'https://image.tmdb.org/t/p/w185' + rec.poster_path : 'assets/placeholder-poster.jpg'" 
                  [alt]="rec.title" loading="lazy">

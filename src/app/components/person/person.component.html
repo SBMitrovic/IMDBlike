@@ -1,2 +1,114 @@
-<p>person works!</p>
-{{person.name}}
+<!-- Person Details Container -->
+<div class="person-details-container" *ngIf="person">
+  
+  <!-- Hero Section -->
+  <div class="person-hero">
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <div class="person-image">
+          <img [src]="person.profile_path ? 'https://image.tmdb.org/t/p/w342' + person.profile_path : 'assets/placeholder-person.jpg'" 
+               [alt]="person.name" class="profile-image">
+        </div>
+        
+        <div class="person-info">
+          <h1 class="person-name">{{person.name}}</h1>
+          <p class="person-department" *ngIf="person.known_for_department">
+            <i class="fas fa-star"></i>
+            Known for: {{person.known_for_department}}
+          </p>
+          
+          <div class="person-meta">
+            <div class="meta-item" *ngIf="person.birthday">
+              <i class="fas fa-birthday-cake"></i>
+              <span>Born: {{person.birthday | date:'MMM dd, yyyy'}}</span>
+              <span *ngIf="getAge(person.birthday, person.deathday)" class="age">({{getAge(person.birthday, person.deathday)}} years old)</span>
+            </div>
+            
+            <div class="meta-item" *ngIf="person.deathday">
+              <i class="fas fa-cross"></i>
+              <span>Died: {{person.deathday | date:'MMM dd, yyyy'}}</span>
+            </div>
+            
+            <div class="meta-item" *ngIf="person.place_of_birth">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>{{person.place_of_birth}}</span>
+            </div>
+            
+            <div class="meta-item" *ngIf="person.popularity">
+              <i class="fas fa-fire"></i>
+              <span>Popularity: {{person.popularity | number:'1.0-1'}}</span>
+            </div>
+          </div>
+          
+          <!-- Gender -->
+          <div class="person-gender" *ngIf="person.gender">
+            <span class="gender-badge">{{getGenderText(person.gender)}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content Sections -->
+  <div class="person-content">
+    
+    <!-- Biography Section -->
+    <section class="content-section" *ngIf="person.biography">
+      <h3 class="section-title">Biography</h3>
+      <div class="biography-content">
+        <p class="biography-text" [class.expanded]="isBiographyExpanded">
+          {{person.biography}}
+        </p>
+        <button 
+          *ngIf="person.biography.length > 500" 
+          class="expand-btn" 
+          (click)="toggleBiography()">
+          {{isBiographyExpanded ? 'Show Less' : 'Read More'}}
+        </button>
+      </div>
+    </section>
+
+    <!-- Movies Section -->
+    <section class="content-section" *ngIf="person_cast && person_cast.length > 0">
+      <h3 class="section-title">
+        Known For 
+        <span class="movie-count">({{person_cast.length}} movies)</span>
+      </h3>
+      <div class="movies-grid">
+        <div class="movie-card" *ngFor="let movie of (showAllMovies ? person_cast : person_cast.slice(0, 12))" (click)="openMovieDetails(movie.id)">
+          <div class="movie-image">
+            <img [src]="movie.poster_path ? 'https://image.tmdb.org/t/p/w185' + movie.poster_path : 'assets/placeholder-poster.jpg'" 
+                 [alt]="movie.title" loading="lazy">
+            <div class="movie-overlay">
+              <div class="movie-rating" *ngIf="movie.vote_average && movie.vote_average > 0">
+                <i class="fas fa-star"></i>
+                <span>{{movie.vote_average | number:'1.1-1'}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="movie-info">
+            <h4 class="movie-title">{{movie.title}}</h4>
+            <p class="movie-character" *ngIf="movie.character">as {{movie.character}}</p>
+            <p class="movie-year" *ngIf="movie.release_date">{{movie.release_date | date:'yyyy'}}</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Show All Button -->
+      <div class="show-all-container" *ngIf="person_cast.length > 12">
+        <button class="btn btn-outline" (click)="toggleShowAllMovies()">
+          {{showAllMovies ? 'Show Less' : 'Show All ' + person_cast.length + ' Movies'}}
+        </button>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="!person">
+  <div class="loading-spinner">
+    <i class="fas fa-spinner fa-spin"></i>
+    <p>Loading person details...</p>
+  </div>
+</div>

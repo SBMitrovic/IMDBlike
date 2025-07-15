@@ -317,4 +317,81 @@ body:not(.cdk-global-scrollblock) * {
   z-index: 1 !important;
 }
 
+/* ==========================================================================
+   Custom Snackbar Styles for Login Required Messages
+   ========================================================================== */
+.login-required-snackbar {
+  background: rgba(255, 255, 255, 0.8) !important; /* 20% transparent white */
+  color: #333333 !important;
+  font-weight: 600;
+  font-size: 14px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(228, 187, 35, 0.6) !important;
+  min-width: 50% !important; /* Half of navbar width */
+  max-width: 50% !important;
+  height: 60px !important; /* Navbar height */
+  padding: 0 16px !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.login-required-snackbar .mdc-snackbar__surface {
+  background: rgba(255, 255, 255, 0.8) !important;
+  color: #333333 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid rgba(228, 187, 35, 0.6) !important;
+  height: 60px !important;
+  min-height: 60px !important;
+}
+
+.login-required-snackbar .mat-mdc-snack-bar-label {
+  font-size: 14px !important;
+  line-height: 1.2;
+  padding: 0 !important;
+  color: #333333 !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+.login-required-snackbar .mat-mdc-snack-bar-action {
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 12px !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 8px 16px !important;
+  background: rgba(228, 187, 35, 0.9) !important;
+  transition: all 0.3s ease;
+  margin-left: 12px;
+  box-shadow: 0 2px 8px rgba(228, 187, 35, 0.3) !important;
+  height: 36px !important;
+  min-width: auto !important;
+}
+
+.login-required-snackbar .mat-mdc-snack-bar-action:hover {
+  background: rgba(228, 187, 35, 1) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 12px rgba(228, 187, 35, 0.4) !important;
+}
+
+.login-required-snackbar .mat-mdc-snack-bar-actions {
+  margin-left: auto;
+  padding: 0 !important;
+  margin: 0 0 0 auto !important;
+}
+
+/* Additional targeting for Material Design components */
+.mat-mdc-snack-bar-container.login-required-snackbar {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(228, 187, 35, 0.6) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+  height: 60px !important;
+  min-height: 60px !important;
+  max-height: 60px !important;
+}
+
 
