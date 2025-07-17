@@ -1,6 +1,8 @@
 import { Component, ViewChild, OnInit, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MoviesapiService } from 'src/app/services/moviesapi.service';
+import { FirebaseAuthService } from 'src/app/services/firebase-auth.service';
+import { UserListsService } from 'src/app/services/user-lists.service';
 import { NgbCarousel, NgbSlideEvent, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -65,9 +67,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     { title: 'Box Office Analysis', change: 1 }
   ];
   
-  // Watchlist (sample data - replace with actual service)
-  watchlist: Set<number> = new Set([1, 5, 12, 23]);
-  
   // Loading and Error States
   isLoading: boolean = true;
   hasError: boolean = false;
@@ -79,7 +78,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     protected movieService: MoviesapiService,
     private router: Router,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private authService: FirebaseAuthService,
+    private userListsService: UserListsService
   ) {
     this.moviesArr = [];
   }
@@ -106,7 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     
     const subscription = this.movieService.getTopRatedMovies(1).subscribe({
       next: (res) => {
-        this.moviesArr = res.results.slice(0, 5); // Reduced to 5 movies for better performance
+        this.moviesArr = res.results.slice(0,30); // Reduced to 5 movies for better performance
         if (this.moviesArr.length > 0) {
           this.active_movie_id = this.moviesArr[0].id;
           this.currentSlideIndex = 0;
@@ -240,23 +241,25 @@ export class HomeComponent implements OnInit, OnDestroy {
    * Navigate to movie details page
    */
   viewMovieDetails(movieId: number): void {
-    this.router.navigate(['/movie-details', movieId]);
+    this.router.navigate(['/movies', movieId]);
   }
   
   /**
-   * Toggle movie in watchlist with optimized change detection
+   * Toggle movie in watchlist using UserListsService
    */
   toggleWatchlist(movie: any): void {
-    if (this.isInWatchlist(movie.id)) {
-      this.watchlist.delete(movie.id);
-      console.log('Removed from watchlist:', movie.title);
+    if (!this.isUserLoggedIn()) {
+      console.log('User not logged in, cannot add to watchlist');
+      return;
+    }
+
+    const success = this.userListsService.toggleWatchLater(movie);
+    if (success) {
+      console.log('Watchlist updated for:', movie.title);
     } else {
-      this.watchlist.add(movie.id);
-      console.log('Added to watchlist:', movie.title);
+      console.log('Failed to update watchlist');
     }
     
-    // Save to service/localStorage
-    this.saveWatchlist();
     this.cdr.detectChanges();
   }
   
@@ -264,23 +267,24 @@ export class HomeComponent implements OnInit, OnDestroy {
    * Check if movie is in watchlist
    */
   isInWatchlist(movieId: number): boolean {
-    return this.watchlist.has(movieId);
+    return this.userListsService.isInWatchLater(movieId);
   }
   
   /**
    * Share movie
    */
   shareMovie(movie: any): void {
+    const shareUrl = `${window.location.origin}/movies/${movie.id}`;
+    
     if (navigator.share) {
       // Use Web Share API if available
       navigator.share({
         title: movie.title,
         text: `Check out ${movie.title} on our IMDb-like app!`,
-        url: `${window.location.origin}/movie-details/${movie.id}`
+        url: shareUrl
       }).catch((error) => console.log('Error sharing:', error));
     } else {
       // Fallback to clipboard
-      const shareUrl = `${window.location.origin}/movie-details/${movie.id}`;
       navigator.clipboard.writeText(shareUrl).then(() => {
         console.log('Movie URL copied to clipboard');
         // Show user feedback
@@ -290,6 +294,13 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
   
+  /**
+   * Check if user is logged in
+   */
+  isUserLoggedIn(): boolean {
+    return this.authService.isAuthenticated();
+  }
+
   /**
    * Toggle autoplay setting
    */
@@ -309,14 +320,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         }, 100);
       }
     }
-  }
-  
-  /**
-   * Save watchlist to localStorage/service
-   */
-  private saveWatchlist(): void {
-    const watchlistArray = Array.from(this.watchlist);
-    localStorage.setItem('userWatchlist', JSON.stringify(watchlistArray));
   }
   
   /**

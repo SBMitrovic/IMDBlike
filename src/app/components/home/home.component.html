@@ -103,7 +103,7 @@
                       <i class="fa fa-info-circle"></i>
                       More Details
                     </button>
-                    <button class="btn btn-secondary" (click)="toggleWatchlist(movie)">
+                    <button class="btn btn-secondary" *ngIf="isUserLoggedIn()" (click)="toggleWatchlist(movie)">
                       <i class="fa" [class.fa-plus]="!isInWatchlist(movie.id)" 
                          [class.fa-check]="isInWatchlist(movie.id)"></i>
                       {{ isInWatchlist(movie.id) ? 'In Watchlist' : 'Add to Watchlist' }}

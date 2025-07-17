@@ -130,9 +130,21 @@ export class MovieDetailsComponent implements OnInit{
   }
 
   openPersonDetails(personId: number): void {
-    this.router.navigate(['/person', personId]).then(() => {
-      window.scrollTo(0, 0);
-    });
+    if (this.isModalMode) {
+      // If we're in modal mode, close the modal first then navigate
+      this.dialogRef?.close();
+      // Add a small delay to ensure modal is closed before navigation
+      setTimeout(() => {
+        this.router.navigate(['/person', personId]).then(() => {
+          window.scrollTo(0, 0);
+        });
+      }, 100);
+    } else {
+      // If we're on the page, just navigate to the person page
+      this.router.navigate(['/person', personId]).then(() => {
+        window.scrollTo(0, 0);
+      });
+    }
   }
 
   // User lists functionality
