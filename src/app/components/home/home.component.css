@@ -120,8 +120,8 @@
   padding: var(--spacing-2xl);
   background: linear-gradient(
     135deg,
-    rgba(0, 0, 0, 0.6) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
+    #e4bb23 0%,
+    rgba(0, 0, 0, 0.4) 20%,
     rgba(0, 0, 0, 0.2) 100%
   );
   backdrop-filter: blur(1px);
