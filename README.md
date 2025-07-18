@@ -275,7 +275,7 @@ firebase deploy
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
 
 ## 🙏 Acknowledgments
 
@@ -301,13 +301,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Multi-language Support**: Internationalization
 - **TV Shows**: Expand beyond movies to include TV series
 
-## 📞 Support
-
-For support, please open an issue on GitHub or contact the maintainers.
-
 ---
+**by Stefan-Branko Mitrovic**
 
-**Made with ❤️ by Stefan Mitrovic**
 
-*Bringing the magic of cinema to your fingertips* 🎬
- 
