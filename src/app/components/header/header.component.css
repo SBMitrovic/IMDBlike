@@ -269,14 +269,17 @@
   .user-info {
     display: none; /* Hide welcome message on mobile */
   }
-  
+  .logo {
+    display: flex;
+    justify-content: center;
+  }
   .logout-btn {
     padding: 0.4rem 0.8rem;
     font-size: 0.8rem;
   }
   
   .search-container {
-    max-width: 200px;
+    width: 100%;
   }
   
   .search-input {
