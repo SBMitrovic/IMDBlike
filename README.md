@@ -1,5 +1,7 @@
 # IMDBlike
 
+Deployed at: imdblikesbm.netlify.app
+
 🎬 A modern, responsive movie database application built with Angular 17, inspired by IMDb. Browse movies, search for your favorites, create watchlists, and discover new content with a beautiful, mobile-first design.
 
 
