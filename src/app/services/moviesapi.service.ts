@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs';
 import { Movie, Movies } from 'src/app/interfaces/movie';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
@@ -12,8 +13,8 @@ import { Movie, Movies } from 'src/app/interfaces/movie';
 export class MoviesapiService {
 
   private readonly rootUrl = 'https://api.themoviedb.org/3/';
-  private readonly apiKey = 'f300e933685acb83d84aa24df1bb7170';
-  private readonly bearerToken =  { 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmMzAwZTkzMzY4NWFjYjgzZDg0YWEyNGRmMWJiNzE3MCIsInN1YiI6IjY1MDc2NmY1MzczYWMyMDBhY2Q3MDFmYSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.EDoLzgqvWQJa4LtkwNxYlXXSqoZFeYMv4vjJcGuZX5Q'};
+  private readonly apiKey = environment.tmdb.apiKey;
+  private readonly bearerToken =  { 'Authorization': environment.tmdb.bearerToken };
   
   pageNum = 1;
   topRatedMoviesArr : Movie [] = [];
