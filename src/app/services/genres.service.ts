@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Genre } from 'src/app/interfaces/genre';
 import { Genres } from 'src/app/interfaces/genres';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { Genres } from 'src/app/interfaces/genres';
 export class GenresService {
   genresArr : Genre [] = [];
   private readonly rootUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=';
-  private readonly apiKey = 'f300e933685acb83d84aa24df1bb7170';
+  private readonly apiKey = environment.tmdb.apiKey;
   constructor(private httpClient : HttpClient) {}
 
   getAllGenres(){
