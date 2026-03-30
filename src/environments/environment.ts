@@ -20,7 +20,17 @@ export const environment = {
 };
 
 function getEnvVariable(key: string): string {
-  return (window as any).__env__?.[key] || '';
+  const value = (window as any).__env__?.[key] || '';
+  
+  // DEBUG: Log za provjeru
+  if (!value) {
+    console.warn(`⚠️ Environment variable not found: ${key}`);
+    console.log('Available window.__env__:', (window as any).__env__);
+  } else {
+    console.log(`✅ Environment variable loaded: ${key}`);
+  }
+  
+  return value;
 }
 
 /*

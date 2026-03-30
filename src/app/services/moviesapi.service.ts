@@ -12,7 +12,7 @@ import { environment } from '../../environments/environment';
 
 export class MoviesapiService {
 
-  private readonly rootUrl = 'https://api.themoviedb.org/3/';
+  private readonly rootUrl = 'https://api.themoviedb.org/3';
   private readonly apiKey = environment.tmdb.apiKey;
   private readonly bearerToken =  { 'Authorization': environment.tmdb.bearerToken };
   
@@ -26,7 +26,7 @@ export class MoviesapiService {
  
 
   getTopRatedMovies(page : number): Observable<Movies> {
-    return this.httpClient.get<Movies>(`${this.rootUrl}/movie/top_rated?page=${page}&language=${this.language}`, {headers: this.bearerToken});
+    return this.httpClient.get<Movies>(`${this.rootUrl}/movie/top_rated?api_key=${this.apiKey}&page=${page}&language=${this.language}`);
   }
 
   getNowPlaying(page: number): Observable<any> {

@@ -33,6 +33,10 @@ window.__env__ = window.__env__ || {};
 window.__env__.FIREBASE_API_KEY = "${envVars.FIREBASE_API_KEY}";
 window.__env__.TMDB_API_KEY = "${envVars.TMDB_API_KEY}";
 window.__env__.TMDB_BEARER_TOKEN = "${envVars.TMDB_BEARER_TOKEN}";
+
+// DEBUG: Log kada se fajl učita
+console.log('✅ env.js loaded successfully!');
+console.log('Loaded env vars:', Object.keys(window.__env__).reduce((acc, key) => ({...acc, [key]: window.__env__[key] ? '***REDACTED***' : 'EMPTY'}), {}));
 `;
 
 const envFilePath = path.join(__dirname, '../src/assets/env.js');
@@ -42,6 +46,13 @@ try {
   console.log('✅ env.js generated successfully!');
   console.log(`   Location: ${envFilePath}`);
   console.log(`   Keys loaded from: ${fs.existsSync(path.join(__dirname, '../.env.local')) ? '.env.local' : 'Environment variables'}`);
+  
+  // DEBUG: Ispis generisanih vrijednosti
+  console.log('\n🔍 Generated environment values:');
+  console.log(`   FIREBASE_API_KEY: ${envVars.FIREBASE_API_KEY ? '✅ SET' : '❌ EMPTY'}`);
+  console.log(`   TMDB_API_KEY: ${envVars.TMDB_API_KEY ? '✅ SET' : '❌ EMPTY'}`);
+  console.log(`   TMDB_BEARER_TOKEN: ${envVars.TMDB_BEARER_TOKEN ? '✅ SET' : '❌ EMPTY'}\n`);
+  
 } catch (error) {
   console.error('❌ Error generating env.js:', error);
   process.exit(1);
