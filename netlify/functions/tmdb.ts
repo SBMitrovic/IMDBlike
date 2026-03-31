@@ -83,6 +83,7 @@ const handler: Handler = async (event) => {
     const url = `${TMDB_BASE_URL}${endpoint}?${queryParams.toString()}`;
 
     console.log(`🎬 TMDB Proxy Request: ${endpoint}`);
+    console.log(`📍 URL: ${url}`);
 
     // Provjeri Bearer token prije zahtjeva
     if (!BEARER_TOKEN) {
@@ -97,7 +98,10 @@ const handler: Handler = async (event) => {
       };
     }
 
-    console.log(`✅ Using Bearer Token: ${BEARER_TOKEN.substring(0, 20)}...`);
+    console.log(`✅ Bearer Token found`);
+    console.log(`📝 Token length: ${BEARER_TOKEN.length}`);
+    console.log(`📝 Token starts with: ${BEARER_TOKEN.substring(0, 30)}...`);
+    console.log(`📝 Token ends with: ...${BEARER_TOKEN.substring(BEARER_TOKEN.length - 20)}`);
 
     // Napravi zahtjev sa Bearer tokenom (OVDJE JE SKRIT NA BACKEND-U!)
     const response = await fetch(url, {
@@ -108,18 +112,21 @@ const handler: Handler = async (event) => {
       }
     });
 
+    console.log(`🔍 TMDB Response Status: ${response.status}`);
+
     const data = await response.json();
 
     // Ako je greška, vrati je sa debug informacijama
     if (!response.ok) {
       console.error(`❌ TMDB API Error: ${response.status} ${response.statusText}`);
-      console.error(`Response data:`, data);
+      console.error(`📋 Error Response:`, data);
+      console.error(`📋 Headers sent: Authorization: ${BEARER_TOKEN.substring(0, 30)}...`);
       return {
         statusCode: response.status,
         headers: corsHeaders,
         body: JSON.stringify({
           ...data,
-          _debug: `TMDB returned ${response.status} for endpoint ${endpoint}`
+          _debug: `TMDB returned ${response.status} for endpoint ${endpoint}. Bearer token length: ${BEARER_TOKEN.length}`
         })
       };
     }
