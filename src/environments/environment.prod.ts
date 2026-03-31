@@ -10,8 +10,8 @@ export const environment = {
     measurementId: "G-6BZ2V76E2Y"
   },
   tmdb: {
-    apiKey: getEnvVariable('TMDB_API_KEY'),
-    bearerToken: getEnvVariable('TMDB_BEARER_TOKEN')
+    apiKey: getEnvVariable('TMDB_API_KEY')
+    // NAPOMENA: bearerToken se NE koristi na frontend-u - ostaje samo na serverless funkciji (backend)
   }
 };
 

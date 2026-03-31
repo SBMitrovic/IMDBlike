@@ -32,7 +32,7 @@ const envScript = `// Auto-generated environment variables
 window.__env__ = window.__env__ || {};
 window.__env__.FIREBASE_API_KEY = "${envVars.FIREBASE_API_KEY}";
 window.__env__.TMDB_API_KEY = "${envVars.TMDB_API_KEY}";
-window.__env__.TMDB_BEARER_TOKEN = "${envVars.TMDB_BEARER_TOKEN}";
+// NAPOMENA: TMDB_BEARER_TOKEN se NIJE generiše ovdje jer se koristi samo na backend-u (serverless funkcija)
 
 // DEBUG: Log kada se fajl učita
 console.log('✅ env.js loaded successfully!');
