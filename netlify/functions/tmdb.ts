@@ -3,6 +3,10 @@ import type { Handler } from '@netlify/functions';
 const TMDB_BASE_URL = 'https://api.themoviedb.org/3';
 const BEARER_TOKEN = process.env.TMDB_BEARER_TOKEN;
 
+// DEBUG: Log pri startu funkcije
+console.log('🎬 TMDB Proxy Function Initialized');
+console.log(`Bearer Token Available: ${BEARER_TOKEN ? '✅ YES' : '❌ NO'}`);
+
 interface TmdbRequest {
   endpoint: string;
   params?: Record<string, any>;
@@ -80,24 +84,43 @@ const handler: Handler = async (event) => {
 
     console.log(`🎬 TMDB Proxy Request: ${endpoint}`);
 
+    // Provjeri Bearer token prije zahtjeva
+    if (!BEARER_TOKEN) {
+      console.error('❌ CRITICAL: BEARER_TOKEN is not set in process.env!');
+      return {
+        statusCode: 500,
+        headers: corsHeaders,
+        body: JSON.stringify({
+          error: 'Bearer token not configured',
+          message: 'TMDB_BEARER_TOKEN environment variable is missing'
+        })
+      };
+    }
+
+    console.log(`✅ Using Bearer Token: ${BEARER_TOKEN.substring(0, 20)}...`);
+
     // Napravi zahtjev sa Bearer tokenom (OVDJE JE SKRIT NA BACKEND-U!)
     const response = await fetch(url, {
       method: 'GET',
       headers: {
-        'Authorization': BEARER_TOKEN || '',
+        'Authorization': BEARER_TOKEN,
         'Content-Type': 'application/json'
       }
     });
 
     const data = await response.json();
 
-    // Ako je greška, vrati je
+    // Ako je greška, vrati je sa debug informacijama
     if (!response.ok) {
-      console.error(`❌ TMDB Error:`, data);
+      console.error(`❌ TMDB API Error: ${response.status} ${response.statusText}`);
+      console.error(`Response data:`, data);
       return {
         statusCode: response.status,
         headers: corsHeaders,
-        body: JSON.stringify(data)
+        body: JSON.stringify({
+          ...data,
+          _debug: `TMDB returned ${response.status} for endpoint ${endpoint}`
+        })
       };
     }
 
