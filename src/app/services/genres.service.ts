@@ -2,19 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Genre } from 'src/app/interfaces/genre';
 import { Genres } from 'src/app/interfaces/genres';
-import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GenresService {
   genresArr : Genre [] = [];
-  private readonly rootUrl = 'https://api.themoviedb.org/3/genre/movie/list?api_key=';
-  private readonly apiKey = environment.tmdb.apiKey;
+  private readonly proxyUrl = '/.netlify/functions/tmdb';
+  
   constructor(private httpClient : HttpClient) {}
 
   getAllGenres(){
-    return this.httpClient.get<Genres>(this.rootUrl + this.apiKey);
+    // Koristi proxy umjesto direktnog TMDB API poziva
+    return this.httpClient.post<Genres>(this.proxyUrl, {
+      endpoint: '/genre/movie/list',
+      params: {}
+    });
   }
 
   getGenresArr(){
